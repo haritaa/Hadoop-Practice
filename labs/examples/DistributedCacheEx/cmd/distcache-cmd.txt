@@ -1,0 +1,27 @@
+#Create folder structure in HDFS 
+hadoop fs -mkdir /user/training/distcache /user/training/distcache/input
+
+#Clean up input directory (if has any data)
+hadoop fs -rm -r /user/training/distcache/input/*
+
+#Put sample dataset into HDFS
+hadoop fs -put ~/sap-ariba_bigdata/labs/dataset/distcache/abc.dat /user/training/distcache/
+hadoop fs -put ~/sap-ariba_bigdata/labs/dataset/distcache/dcinput /user/training/distcache/input/
+
+#Compile distcache class
+cd ~/sap-ariba_bigdata/labs/examples/DistributedCacheEx
+mkdir -p build
+javac -cp /opt/hadoop/share/hadoop/common/*:/opt/hadoop/share/hadoop/mapreduce/* src/com/examples/hadoop/mapred/DistributedCacheEx.java -d build -Xlint
+
+#Create JAR
+jar -cvf distcache.jar -C build/ .
+
+#Remove output directory (if exists)
+hadoop fs -rm -r /user/training/distcache/output
+
+#Submit distcache MapReduce Job
+cd ~/sap-ariba_bigdata/labs/examples/distcacheEx
+hadoop jar distcache.jar com.examples.hadoop.mapred.DistributedCacheEx /user/training/distcache/input /user/training/distcache/output
+
+#View output
+hadoop fs -cat /user/training/distcache/output/part-*

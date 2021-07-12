@@ -1,0 +1,26 @@
+#Create folder structure in HDFS 
+hadoop fs -mkdir /user/training/mapredjoin /user/training/mapredjoin/input
+
+#Clean up input directory (if has any data)
+hadoop fs -rm -r /user/training/mapredjoin/input/*
+
+#Put sample dataset into HDFS
+hadoop fs -put ~/sap-ariba_bigdata/labs/dataset/mapredjoin/* /user/training/mapredjoin/input/
+
+#Compile mapredjoin classa
+cd ~/sap-ariba_bigdata/labs/examples/ReduceJoinEx
+mkdir -p build
+javac -cp /opt/hadoop/share/hadoop/common/*:/opt/hadoop/share/hadoop/mapreduce/* src/com/examples/hadoop/mapred/ReduceJoinEx.java -d build -Xlint
+
+#Create JAR
+jar -cvf reducejoin.jar -C build/ .
+
+#Remove output directory (if exists)
+hadoop fs -rm -r /user/training/mapredjoin/output
+
+#Submit mapredjoin MapReduce Job
+cd ~/sap-ariba_bigdata/labs/examples/mapredjoinEx
+hadoop jar reducejoin.jar com.examples.hadoop.mapred.ReduceJoinEx /user/training/mapredjoin/input/custs /user/training/mapredjoin/input/txns /user/training/mapredjoin/output
+
+#View output
+hadoop fs -cat /user/training/mapredjoin/output/part-*

@@ -1,0 +1,58 @@
+Field#  Name                           Units
+———————————————                    ———————————————  
+
+1    WBANNO                         XXXXX
+
+2    LST_DATE                       YYYYMMDD
+
+3    CRX_VN                         XXXXXX
+
+4    LONGITUDE                      Decimal_degrees
+
+5    LATITUDE                       Decimal_degrees
+
+6    T_DAILY_MAX                    Celsius
+
+7    T_DAILY_MIN                    Celsius
+
+8    T_DAILY_MEAN                   Celsius
+
+9    T_DAILY_AVG                    Celsius
+
+10   P_DAILY_CALC                   mm
+
+11   SOLARAD_DAILY                  MJ/m^2
+
+12   SUR_TEMP_DAILY_TYPE            X
+
+13   SUR_TEMP_DAILY_MAX             Celsius
+
+14   SUR_TEMP_DAILY_MIN             Celsius
+
+15   SUR_TEMP_DAILY_AVG             Celsius
+
+16   RH_DAILY_MAX                   %
+
+17   RH_DAILY_MIN                   %
+
+18   RH_DAILY_AVG                   %
+
+19   SOIL_MOISTURE_5_DAILY          m^3/m^3
+
+20   SOIL_MOISTURE_10_DAILY         m^3/m^3
+
+21   SOIL_MOISTURE_20_DAILY         m^3/m^3
+
+22   SOIL_MOISTURE_50_DAILY         m^3/m^3
+
+23   SOIL_MOISTURE_100_DAILY        m^3/m^3
+
+24   SOIL_TEMP_5_DAILY              Celsius
+
+25   SOIL_TEMP_10_DAILY             Celsius
+
+26   SOIL_TEMP_20_DAILY             Celsius
+
+27   SOIL_TEMP_50_DAILY             Celsius
+
+28   SOIL_TEMP_100_DAILY            Celsius

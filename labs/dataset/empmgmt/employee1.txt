@@ -1,0 +1,7 @@
+1,Kumar,25,M,20000.0,Manager,IT,1
+2,Selvam,28,M,25000.0,Software Engineer,IT,1
+3,Solvin,29,M,30000.0,Developer,IT,2
+4,Siddarth,45,M,50000.0,VP,Finance,1
+5,Mathes,35,M,60000.0,Function Head,HR,1
+6,Sinthura,27,F,40000.0,Lead,Operations,2
+7,Sunil,50,M,70000.0,President,Delivery,3

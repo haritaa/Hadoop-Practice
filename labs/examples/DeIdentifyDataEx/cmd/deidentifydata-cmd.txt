@@ -1,0 +1,29 @@
+#Create folder structure in HDFS 
+hadoop fs -mkdir /user/training/healthcare /user/training/healthcare/input
+
+#Verify sample dataset
+cat ~/sap-ariba_bigdata/labs/dataset/healthcare/healthcare_data.csv
+
+#Clean up input directory (if has any data)
+hadoop fs -rm -r /user/training/healthcare/input/*
+
+#Put sample dataset into HDFS
+hadoop fs -put ~/sap-ariba_bigdata/labs/dataset/healthcare/healthcare_data.csv /user/training/healthcare/input
+
+#Compile WeatherHotColdEx class
+cd ~/sap-ariba_bigdata/labs/examples/DeIdentifyDataEx
+mkdir -p build
+javac -cp /opt/hadoop/share/hadoop/common/*:/opt/hadoop/share/hadoop/mapreduce/*:lib/* src/com/examples/hadoop/mapred/DeIdentifyDataEx.java -d build -Xlint
+
+#Create JAR
+jar -cvf deidentify.jar -C build/ . 
+
+#Remove output directory (if exists)
+hadoop fs -rm -r /user/training/healthcare/output
+
+#Submit DeIdentification MapReduce Job
+cd ~/sap-ariba_bigdata/labs/examples/DeIdentifyDataEx
+hadoop jar deidentify.jar com.examples.hadoop.mapred.DeIdentifyDataEx /user/training/healthcare/input /user/training/healthcare/output
+
+#View output
+hadoop fs -cat /user/training/healthcare/output/part-*

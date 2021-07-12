@@ -1,0 +1,26 @@
+#Create folder structure in HDFS 
+hadoop fs -mkdir /user/training/wordcount /user/training/wordcount/input
+
+#Clean up input directory (if has any data)
+hadoop fs -rm -r /user/training/wordcount/input/*
+
+#Put sample dataset into HDFS
+hadoop fs -put ~/sap-ariba_bigdata/labs/dataset/wordcount/wordcount-input.txt /user/training/wordcount/input/
+
+#Compile wordcount class
+cd ~/sap-ariba_bigdata/labs/examples/WordCountEx
+mkdir -p build
+javac -cp /opt/hadoop/share/hadoop/common/*:/opt/hadoop/share/hadoop/mapreduce/* src/com/examples/hadoop/mapred/WordCountEx.java -d build -Xlint
+
+#Create JAR
+jar -cvf wordcount.jar -C build/ .
+
+#Remove output directory (if exists)
+hadoop fs -rm -r /user/training/wordcount/output
+
+#Submit WordCount MapReduce Job
+cd ~/sap-ariba_bigdata/labs/examples/WordCountEx
+hadoop jar wordcount.jar com.examples.hadoop.mapred.WordCountEx /user/training/wordcount/input /user/training/wordcount/output
+
+#View output
+hadoop fs -cat /user/training/wordcount/output/part-*

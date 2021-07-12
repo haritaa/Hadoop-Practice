@@ -1,0 +1,37 @@
+
+Lab Setup
+=========
+	1) Cloud Labs (< 8GB RAM) => Personal or Official Laptop or PC
+		- Open internet connectivity
+		- Putty software
+			- https://the.earth.li/~sgtatham/putty/latest/w64/putty.exe
+		- Cloud Labs IP - TO BE PROVIDED
+		- Cloud Labs Key - AVAILABLE IN GIT => https://github.com/asaravanakumar/danskeit_hadoop-pyspark/tree/master/labs/aws
+		
+		Step #1: Connecting to cloud instance
+
+		Step #2: Clone git repository - which has lab examples and training materials
+				 git clone https://github.com/asaravanakumar/danskeit_hadoop-pyspark
+
+		Step #3: Verify ssh to localhost -> ssh localhost		(For starting up hadoop cluster)
+				 ssh-keygen -f "/home/ubuntu/.ssh/known_hosts" -R "localhost"	(If ssh to localhost shows any error, remove existing ssh entry and create new)
+			
+				OR 
+				
+	2) Local Labs (> 8GB RAM)
+		- Oracle Virtualbox
+			- https://www.virtualbox.org/wiki/Downloads
+		- Bigdata Box Image
+			- https://bigdata-training.s3.ap-south-1.amazonaws.com/image/Bigdata-Box-Ubuntu18-v1.0.ova
+		- Lab setup guide => https://github.com/asaravanakumar/danskeit_pyspark/tree/master/labs/setup/guide		
+		- Login credentials
+			- username: bigdata
+			  password: bigdata@123
+
+Known Issue:
+Error while starting bigdata-box vm => Wireless adapter not found
+
+Solution:
+STEP 1: Locate bigdata-box-ubuntu18.vbox file in your local file system. Edit and remove Network Adapter section and save.
+STEP 2: Goto Virtualbox -> Bigdata-Box-Ubuntu18 -> Settings -> Network -> Adapter 1 -> Attached To -> Bridged Adapter and select your network.
+STEP 3: Start VM

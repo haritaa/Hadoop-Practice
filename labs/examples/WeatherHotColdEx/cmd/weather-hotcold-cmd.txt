@@ -1,0 +1,29 @@
+#Create folder structure in HDFS 
+hadoop fs -mkdir /user/training/weather /user/training/weather/input
+
+#Verify sample dataset
+cat ~/sap-ariba_bigdata/labs/dataset/weather/weather_data.txt
+
+#Clean up input directory (if has any data)
+hadoop fs -rm -r /user/training/weather/input/*
+
+#Put sample dataset into HDFS
+hadoop fs -put ~/sap-ariba_bigdata/labs/dataset/weather/weather_data.txt /user/training/weather/input
+
+#Compile WeatherHotColdEx class
+cd ~/sap-ariba_bigdata/labs/examples/WeatherHotColdEx
+mkdir -p build
+javac -cp /opt/hadoop/share/hadoop/common/*:/opt/hadoop/share/hadoop/mapreduce/* src/com/examples/hadoop/mapred/WeatherHotColdEx.java -d build -Xlint
+
+#Create JAR
+jar -cvf weather-hotcold.jar -C build/ . 
+
+#Remove output directory (if exists)
+hadoop fs -rm -r /user/training/weather/output
+
+#Submit WeatherData MapReduce Job
+cd ~/sap-ariba_bigdata/labs/examples/WeatherHotColdEx
+hadoop jar weather-hotcold.jar com.examples.hadoop.mapred.WeatherHotColdEx /user/training/weather/input /user/training/weather/output
+
+#View output
+hadoop fs -cat /user/training/weather/output/part-*

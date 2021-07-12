@@ -1,0 +1,4 @@
+1207	Moorthy	50000	Data Analyst
+1208	Kumar	40000	Prograammer
+1209	John	50000	QA Lead
+1210	Swapna	75000	Technical Manager

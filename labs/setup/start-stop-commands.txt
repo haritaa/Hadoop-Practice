@@ -1,0 +1,42 @@
+START COMMANDS
+===============
+#Hadoop HDFS
+start-dfs.sh
+
+#YARN
+start-yarn.sh
+
+#JobHistoryServer
+mr-jobhistory-daemon.sh start historyserver
+
+#HiveServer
+cd $HIVE_HOME
+bin/hiveserver2 &			=> run in the background
+
+#Spark Master
+start-master.sh
+
+#Spark Worker
+start-slave.sh <spark-master-url>
+
+
+STOP COMMANDS
+=============
+#JobHistoryServer
+mr-jobhistory-daemon.sh stop historyserver
+
+#YARN
+stop-yarn.sh
+
+#Hadoop HDFS
+stop-dfs.sh
+
+#HiveServer
+ps -ef | grep hive
+kill -9 <hiveserver-pid>
+
+#Spark Worker
+stop-slaves.sh
+
+#Spark Master
+stop-master.sh

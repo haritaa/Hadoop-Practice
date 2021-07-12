@@ -1,0 +1,5 @@
+{ "time": "2020-12-21T10:30:50Z", "customer": "Anil", "loanId": "140", "status": "PENDING"}
+{ "time": "2020-12-21T10:31:50Z", "customer": "Sunil", "loanId": "141", "status": "APPROVED"}
+{ "time": "2020-12-21T10:32:50Z", "customer": "Mani", "loanId": "142", "status": "REJECTED"}
+{ "time": "2020-12-21T10:33:30Z", "customer": "Mani", "loanId": "142", "status": "PENDING"}
+{ "time": "2020-12-21T10:34:20Z", "customer": "Mani", "loanId": "142", "status": "APPROVED"}

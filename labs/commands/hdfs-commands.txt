@@ -1,0 +1,52 @@
+Task #1:
+========
+Create below directory structure in hdfs
+
+user
+	|_ training
+	
+$ hadoop fs -mkdir /user
+$ hadoop fs -mkdir /user/training
+
+Task #2:
+========
+
+Copy hadoop.txt from from local filesystem to HDFS 
+Source: /home/ubuntu/danskeit_hadoop-pyspark/labs/dataset/wordcount/hadoop.txt
+Target: /user/training
+
+$ hadoop fs -put /home/ubuntu/danskeit_hadoop-pyspark/labs/dataset/wordcount/hadoop.txt /user/training
+$ hadoop fs -copyFromLocal /home/ubuntu/danskeit_hadoop-pyspark/labs/dataset/wordcount/hadoop.txt /user/training/hadoop1.txt
+
+$ hadoop fs -appendToFile /home/ubuntu/danskeit_hadoop-pyspark/labs/dataset/wordcount/hadoop.txt /user/training/hadoop.txt
+
+
+Task #3:
+=========
+
+List copied files in hdfs
+
+#when Namenode runs in local machine
+$ hadoop fs -ls /user/training
+$ hadoop fs -ls hdfs://localhost:9000/user/training
+
+#when Namenode runs in remote machine
+$ hadoop fs -ls hdfs://<namenode-ip>:9000/user/training
+
+Task #4:
+========
+
+View copied file details
+
+$ hadoop fs -cat /user/training/hadoop.txt
+
+Task #5:
+========
+Copy the file from HDFS to local file system
+Source: /user/training/hadoop.txt
+Target: /home/ubuntu/hadoop.txt
+
+$ hadoop fs -get /user/training/hadoop.txt /home/ubuntu/hadoop.txt
+$ hadoop fs -copyToLocal /user/training/hadoop.txt /home/ubuntu/hadoop.txt
+
+$ hadoop fs -getmerge /user/training/hadoop.txt /user/training/hadoop1.txt hadoop-merge.txt
