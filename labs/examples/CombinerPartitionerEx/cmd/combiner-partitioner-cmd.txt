@@ -5,10 +5,10 @@ hadoop fs -mkdir /user/training/wordcount /user/training/wordcount/input
 hadoop fs -rm -r /user/training/wordcount/input/*
 
 #Put sample dataset into HDFS
-hadoop fs -put ~/sap-ariba_bigdata/labs/dataset/wordcount/hadoop.txt /user/training/wordcount/input/
+hadoop fs -put ~/danskeit_hadoop-pyspark/labs/dataset/wordcount/hadoop.txt /user/training/wordcount/input/
 
 #Compile wordcount class
-cd ~/sap-ariba_bigdata/labs/examples/CombinerPartitionerEx
+cd ~/danskeit_hadoop-pyspark/labs/examples/CombinerPartitionerEx
 mkdir -p build
 javac -cp /opt/hadoop/share/hadoop/common/*:/opt/hadoop/share/hadoop/mapreduce/* src/com/examples/hadoop/mapred/CombinerPartitionerEx.java -d build -Xlint
 
@@ -19,7 +19,7 @@ jar -cvf wordcount-combpart.jar -C build/ .
 hadoop fs -rm -r /user/training/wordcount/output
 
 #Submit WordCount MapReduce Job
-cd ~/sap-ariba_bigdata/labs/examples/CombinerPartitionerEx
+cd ~/danskeit_hadoop-pyspark/labs/examples/CombinerPartitionerEx
 hadoop jar wordcount-combpart.jar com.examples.hadoop.mapred.CombinerPartitionerEx /user/training/wordcount/input/hadoop.txt /user/training/wordcount/output
 
 #View output

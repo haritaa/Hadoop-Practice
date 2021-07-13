@@ -2,16 +2,16 @@
 hadoop fs -mkdir /user/training/weather /user/training/weather/input
 
 #Verify sample dataset
-cat ~/sap-ariba_bigdata/labs/dataset/weather/weather_data.txt
+cat ~/danskeit_hadoop-pyspark/labs/dataset/weather/weather_data.txt
 
 #Clean up input directory (if has any data)
 hadoop fs -rm -r /user/training/weather/input/*
 
 #Put sample dataset into HDFS
-hadoop fs -put ~/sap-ariba_bigdata/labs/dataset/weather/weather_data.txt /user/training/weather/input
+hadoop fs -put ~/danskeit_hadoop-pyspark/labs/dataset/weather/weather_data.txt /user/training/weather/input
 
 #Compile WeatherHotColdEx class
-cd ~/sap-ariba_bigdata/labs/examples/WeatherHotColdEx
+cd ~/danskeit_hadoop-pyspark/labs/examples/WeatherHotColdEx
 mkdir -p build
 javac -cp /opt/hadoop/share/hadoop/common/*:/opt/hadoop/share/hadoop/mapreduce/* src/com/examples/hadoop/mapred/WeatherHotColdEx.java -d build -Xlint
 
@@ -22,7 +22,7 @@ jar -cvf weather-hotcold.jar -C build/ .
 hadoop fs -rm -r /user/training/weather/output
 
 #Submit WeatherData MapReduce Job
-cd ~/sap-ariba_bigdata/labs/examples/WeatherHotColdEx
+cd ~/danskeit_hadoop-pyspark/labs/examples/WeatherHotColdEx
 hadoop jar weather-hotcold.jar com.examples.hadoop.mapred.WeatherHotColdEx /user/training/weather/input /user/training/weather/output
 
 #View output

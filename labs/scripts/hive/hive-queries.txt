@@ -1,0 +1,305 @@
+##Hive client connection
+$ beeline
+
+#Launch beeline disabling console logs
+$ beeline --silent=true
+
+#Launch beeline with HiveServer connectivity
+$ beeline --silent=true -u jdbc:hive2://localhost:10000 username password
+
+#Connect with Hive Server (Hive Server and Metastore needs to run to connect)
+!connect jdbc:hive2://localhost:10000 username password org.apache.hive.jdbc.HiveDriver
+
+#Connect without Hive Server
+#!connect jdbc:hive2:// username password org.apache.hive.jdbc.HiveDriver
+
+# Lists databases (schemas)
+show schemas;
+
+# Lists tables
+show tables;
+
+## Hive Queries
+
+CREATE SCHEMA hive_training;
+
+# Create managed table
+CREATE TABLE IF NOT EXISTS employee ( eid int, name String,
+salary String, designation String)
+COMMENT 'Employee details'
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+LOAD DATA LOCAL INPATH '/home/ubuntu/danskeit_hadoop-pyspark/labs/dataset/empmgmt/employee.txt' OVERWRITE INTO TABLE employee;
+
+ALTER TABLE name RENAME TO new_name
+ALTER TABLE name ADD COLUMNS (col_spec[, col_spec ...])
+ALTER TABLE name CHANGE column_name new_name new_type
+ALTER TABLE name REPLACE COLUMNS (col_spec[, col_spec ...])
+
+#ALTER TABLE employee CHANGE destination designation string
+
+SELECT * FROM EMPLOYEE;
+SELECT * FROM EMPLOYEE WHERE SALARY >= 45000;
+SELECT COUNT(*) FROM EMPLOYEE;
+SELECT SUM(SALARY) FROM EMPLOYEE;
+
+DROP TABLE IF EXISTS employee;
+DROP SCHEMA hive_training;
+
+# Create external table
+CREATE EXTERNAL TABLE IF NOT EXISTS employee ( eid int, name String,
+salary String, designation String)
+COMMENT 'Employee details'
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+LOCATION '/user/training/empmgmt/input';
+
+# Create partition table
+CREATE TABLE IF NOT EXISTS employee_part ( eid int, name String,
+salary String, designation String)
+COMMENT 'Employee details'
+PARTITIONED BY (yoj String)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+# Create cluster table
+CREATE TABLE IF NOT EXISTS employee_clus ( eid int, name String,
+salary String, designation String)
+COMMENT 'Employee details'
+PARTITIONED BY (yoj String) CLUSTERED BY (eid) INTO 3 BUCKETS
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+# Insert data into partition / cluster table
+INSERT INTO TABLE employee_clus (eid, name, salary, designation, yoj) VALUES (100, 'Kumar', 50000, 'Admin', '2020');
+INSERT INTO TABLE employee_clus (eid, name, salary, designation, yoj) VALUES (101, 'Anil', 50000, 'Admin', '2019');
+INSERT INTO TABLE employee_clus (eid, name, salary, designation, yoj) VALUES (102, 'Arvind', 50000, 'Admin', '2020');
+INSERT INTO TABLE employee_clus (eid, name, salary, designation, yoj) VALUES (103, 'Santhosh', 50000, 'Admin', '2019');
+INSERT INTO TABLE employee_clus (eid, name, salary, designation, yoj) VALUES (104, 'Satya', 50000, 'Admin', '2020');
+INSERT INTO TABLE employee_clus (eid, name, salary, designation, yoj) VALUES (106, 'Vijay', 50000, 'Admin', '2020');
+
+## JOINs
+CREATE EXTERNAL TABLE IF NOT EXISTS employee1 ( eid int, name String, age int, gender String, 
+salary double, destination String, department String, country int)
+COMMENT 'Employee details'
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+LOCATION '/user/training/empmgmt/input';
+
+LOAD DATA LOCAL INPATH '/home/ubuntu/danskeit_hadoop-pyspark/labs/dataset/empmgmt/employee1.txt' OVERWRITE INTO TABLE employee1;
+
+
+CREATE EXTERNAL TABLE IF NOT EXISTS country ( cid int, code String, name String)
+COMMENT 'Country details'
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+LOCATION '/user/training/country/input';
+
+LOAD DATA LOCAL INPATH '/home/ubuntu/danskeit_hadoop-pyspark/labs/dataset/empmgmt/country.txt' OVERWRITE INTO TABLE country;
+
+#SELECT Queries
+SELECT * FROM employee WHERE salary > 50000 AND designation = 'Technical lead';
+
+SELECT * FROM employee WHERE salary > 50000 AND designation LIKE '%lead';
+
+SELECT * FROM employee WHERE salary between 30000 and 50000 AND designation LIKE '%lead';
+
+SELECT * FROM employee WHERE salary IN (50000,60000) AND designation LIKE '%lead';
+
+SELECT * FROM employee WHERE salary NOT IN (50000,60000);
+
+SELECT * FROM employee WHERE EXISTS (SELECT eid FROM employee WHERE salary IN (75000,60000));
+
+SELECT * FROM employee e1 WHERE EXISTS (SELECT eid FROM employee e2 WHERE salary IN (75000,60000) AND e1.eid = e2.eid);
+
+SELECT * FROM employee e1 WHERE NOT EXISTS (SELECT eid FROM employee e2 WHERE salary IN (75000,60000) AND e1.eid = e2.eid);
+
+SELECT designation, count(*) FROM employee GROUP BY designation;
+
+SELECT designation, count(*) FROM employee GROUP BY designation HAVING count(*) > 1;
+
+SELECT * FROM EMPLOYEE LIMIT 5;
+
+SELECT * FROM EMPLOYEE ORDER BY name;
+
+SELECT * FROM EMPLOYEE ORDER BY name desc;
+
+SELECT * FROM EMPLOYEE SORT BY name;
+
+SELECT * FROM EMPLOYEE SORT BY name desc;
+
+#Inner Join
+SELECT e.eid, e.name, c.name as country FROM employee1 e JOIN country c ON e.country = c.cid;
+
+#Full Outer Join
+SELECT e.eid, e.name, c.name as country FROM employee1 e FULL OUTER JOIN country c ON e.country = c.cid;
+
+#Left Outer Join
+SELECT e.eid, e.name, c.name as country FROM employee1 e LEFT OUTER JOIN country c ON e.country = c.cid;
+
+#Right Outer Join
+SELECT e.eid, e.name, c.name as country FROM employee1 e RIGHT OUTER JOIN country c ON e.country = c.cid;
+
+## VIEWs
+CREATE VIEW empcountry AS SELECT e.eid, e.name, c.name as country FROM employee1 e JOIN country c ON e.country = c.cid;
+
+SELECT * FROM empcountry;
+
+## Materialized VIEWs
+CREATE MATERIALIZED VIEW empcountry_mat AS SELECT e.eid, e.name, c.name as country FROM employee1 e JOIN country c ON e.country = c.cid;
+
+SELECT * FROM empcountry_mat;
+
+## JSON Data Processing
+
+CREATE TABLE IF NOT EXISTS employee_json ( eid int, name String,
+salary String, designation String)
+COMMENT 'Employee details'
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.JsonSerDe'
+STORED AS TEXTFILE;
+
+# Loading data from local file system
+LOAD DATA LOCAL INPATH '/home/ubuntu/danskeit_hadoop-pyspark/labs/dataset/empmgmt/employee.json' 
+OVERWRITE INTO TABLE employee_json;
+
+# Writing data to HDFS file system
+INSERT OVERWRITE DIRECTORY '/user/training/empmgmt/output' SELECT * FROM employee_json;
+
+# Writing data to local file system
+INSERT OVERWRITE LOCAL DIRECTORY '/home/ubuntu/output' SELECT * FROM employee_json;
+
+# Writing data to Hive table
+CREATE TABLE emp LIKE employee_json;
+INSERT OVERWRITE TABLE emp SELECT * FROM employee_json;
+
+# Writing data in different formats
+
+# Avro Format
+CREATE TABLE emp_avro STORED AS AVRO AS SELECT * FROM emp;
+
+# Parquet Format
+CREATE TABLE emp_parquet STORED AS PARQUET AS SELECT * FROM emp;
+
+# RC Format
+CREATE TABLE emp_rc STORED AS RCFILE AS SELECT * FROM emp;
+
+# ORC Format
+CREATE TABLE emp_orc STORED AS ORC AS SELECT * FROM emp;
+
+# Copy data from Avro to Parquet table
+INSERT INTO emp_parquet SELECT * FROM emp_avro;
+
+# Copy data from emp_parquet to ORC table
+INSERT INTO emp_orc SELECT * FROM emp_parquet;
+
+## XML Data Processing
+# Add hivexmlserde jar into Hive path
+add jar /home/ubuntu/danskeit_hadoop-pyspark/labs/jars/hivexmlserde-1.0.5.3.jar
+
+CREATE TABLE auctions(
+auctionDate string,
+maturityDate string,
+maturityAmt double 
+)
+ROW FORMAT SERDE 'com.ibm.spss.hive.serde2.xml.XmlSerDe'
+WITH SERDEPROPERTIES (
+"column.xpath.auctionDate"="/AuctionAnnouncement/AuctionDate/text()",
+"column.xpath.maturityDate"="/AuctionAnnouncement/MaturityDate/text()",
+"column.xpath.maturityAmt"="/AuctionAnnouncement/MatureSecurityAmount/text()"
+)
+STORED AS
+INPUTFORMAT 'com.ibm.spss.hive.serde2.xml.XmlInputFormat'
+OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.IgnoreKeyTextOutputFormat'
+TBLPROPERTIES (
+"xmlinput.start"="<AuctionAnnouncement",
+"xmlinput.end"="</AuctionAnnouncement>"
+);
+
+######sample auctions xml input####
+<AuctionAnnouncement>
+	<AuctionDate>2008-04-28</AuctionDate>
+	<MaturityDate>2008-07-31</MaturityDate>
+	<MatureSecurityAmount>61989000000.0</MatureSecurityAmount>
+</AuctionAnnouncement>
+###########################
+
+# Fetch auctions
+SELECT * FROM auctions;
+
+CREATE TABLE customers(customer_id STRING, income BIGINT, demographics map<string,string>, financial map<string,string>)
+ROW FORMAT SERDE 'com.ibm.spss.hive.serde2.xml.XmlSerDe'
+WITH SERDEPROPERTIES (
+"column.xpath.customer_id"="/record/@customer_id",
+"column.xpath.income"="/record/income/text()",
+"column.xpath.demographics"="/record/demographics/*",
+"column.xpath.financial"="/record/financial/*"
+)
+STORED AS
+INPUTFORMAT 'com.ibm.spss.hive.serde2.xml.XmlInputFormat'
+OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.IgnoreKeyTextOutputFormat'
+TBLPROPERTIES (
+"xmlinput.start"="<record customer",
+"xmlinput.end"="</record>"
+);
+
+######sample customers xml input######################
+<records>
+	<record customer_id="100">
+		<income>75000</income>		
+		<demographics>
+			<gender>F</gender>
+			<agecat>1</agecat>
+			<edcat>1</edcat>
+			<jobcat>2</jobcat>
+			<empcat>2</empcat>
+			<retire>0</retire>
+			<jobsat>1</jobsat>
+			<marital>1</marital>
+			<spousedcat>1</spousedcat>
+			<residecat>4</residecat>
+			<homeown>0</homeown>
+			<hometype>2</hometype>
+			<addresscat>2</addresscat>
+		</demographics>
+		<financial>
+			<income>18</income>
+			<creddebt>1.003392</creddebt>
+			<othdebt>2.740608</othdebt>
+			<default>0</default>
+		</financial>
+	</record>
+</records>
+#########################################################
+
+#Fetch customers
+SELECT customer_id, income, demographics, financial FROM customers limit 1;
+
+#########################################################################
+
+## Log Data Processing
+
+CREATE TABLE apachelog (
+  host STRING,
+  identity STRING,
+  user STRING,
+  time STRING,
+  request STRING,
+  status STRING,
+  size STRING,
+  referer STRING,
+  agent STRING)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.RegexSerDe'
+WITH SERDEPROPERTIES (
+  "input.regex" = "([^]*) ([^]*) ([^]*) (-|\\[^\\]*\\]) ([^ \"]*|\"[^\"]*\") (-|[0-9]*) (-|[0-9]*)(?: ([^ \"]*|\".*\") ([^ \"]*|\".*\"))?"
+)
+STORED AS TEXTFILE;

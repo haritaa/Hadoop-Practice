@@ -5,10 +5,10 @@ hadoop fs -mkdir /user/training/counter /user/training/counter/input
 hadoop fs -rm -r /user/training/counter/input/*
 
 #Put sample dataset into HDFS
-hadoop fs -put ~/sap-ariba_bigdata/labs/dataset/counter/* /user/training/counter/input/
+hadoop fs -put ~/danskeit_hadoop-pyspark/labs/dataset/counter/* /user/training/counter/input/
 
 #Compile counter class
-cd ~/sap-ariba_bigdata/labs/examples/CounterEx
+cd ~/danskeit_hadoop-pyspark/labs/examples/CounterEx
 mkdir -p build
 javac -cp /opt/hadoop/share/hadoop/common/*:/opt/hadoop/share/hadoop/mapreduce/* src/com/examples/hadoop/mapred/CounterEx.java -d build -Xlint
 
@@ -19,7 +19,7 @@ jar -cvf counter.jar -C build/ .
 hadoop fs -rm -r /user/training/counter/output
 
 #Submit counter MapReduce Job
-cd ~/sap-ariba_bigdata/labs/examples/CounterEx
+cd ~/danskeit_hadoop-pyspark/labs/examples/CounterEx
 hadoop jar counter.jar com.examples.hadoop.mapred.CounterEx /user/training/counter/input /user/training/counter/output
 
 #View output

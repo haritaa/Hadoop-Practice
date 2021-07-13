@@ -1,0 +1,27 @@
+STEP 1: Config changes in hive-site.xml
+	
+	$ sudo nano /opt/hive/conf/hive-site.xml
+		# add between configuration tags
+		<property>
+			<name>hive.server2.enable.doAs</name>
+			<value>false</value>
+		</property>
+		
+	#Save the changes
+
+STEP 2:$ hiveserver2 &		(Starts hive server and runs in background)
+	
+	 $ ps -ef | grep hiveserver	(To verify if hiveserver is running)
+
+STEP 3:$ beeline
+	
+	  beeline> !connect jdbc:hive2://localhost:10000 username password org.apache.hive.jdbc.HiveDriver
+	  
+	  
+STEP 4: Configure port forwarding in putty / ssh client
+		Allow port 10002
+		
+STEP 5: Open Browser and enter
+		http://localhost:10002
+		
+	   

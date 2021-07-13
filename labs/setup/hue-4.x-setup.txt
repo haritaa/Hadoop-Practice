@@ -1,0 +1,46 @@
+#Pre-requisites:
+#java 1.8
+#hadoop 3.x.x
+#hive 3.x.x
+
+#Install OS packages
+sudo apt-get install git ant gcc g++ libffi-dev libkrb5-dev libmysqlclient-dev libsasl2-dev libsasl2-modules-gssapi-mit libsqlite3-dev libssl-dev libxml2-dev libxslt-dev make maven libldap2-dev python-dev python-setuptools libgmp3-dev
+
+#Install Node JS 10
+curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
+sudo apt-get install -y nodejs
+
+#Download Hue
+cd ~/Downloads
+wget https://cdn.gethue.com/downloads/hue-4.9.0.tgz
+tar -xvf hue-4.9.0.tgz
+
+sudo mv hue-4.9.0 /opt/hue-4.9.0
+
+#Install hue in the specified path
+sudo PREFIX=/opt make install
+
+#HUE_HOME configuration
+sudo nano ~/.bashrc
+#############################
+export HUE_HOME=/opt/hue 
+export PATH=$PATH:$HUE_HOME/build/env/bin
+##############################################
+source ~/.bashrc			=> reloads the changes
+
+#Add hue user
+sudo useradd hue
+sudo passwd hue hue
+
+#Change ownership
+sudo chown -R hue:hue /opt/hue
+
+#Update Namenode port
+sudo vi /opt/hue/desktop/conf/hue.ini
+############################################
+webhdfs_url=http://localhost:9870/webhdfs/v1
+############################################
+
+#Start Hue
+cd /opt/hue/build/env/bin
+sudo /opt/hue/build/env/bin/supervisor &

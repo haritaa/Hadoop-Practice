@@ -1,0 +1,10 @@
+1201,Sunil,75000,Technical Manager,8765438979$8765434567$8765432345,home#koramangala$office#ecoworld,IT$Analytics
+1202,Manisha,35000,Proof reader,8765438979$8765434567$8765432345,home#koramangala$office#ecoworld,IT$Analytics
+1203,Anil,25000,Technical writer,8765438979$8765434567$8765432345,home#koramangala$office#ecospace,Quality$Analytics
+1204,Kiran,45000,Hr Admin,8765436979$8765434557$8765432349,home#koramangala$office#ecospace,Quality$Analytics
+1205,Georgil,40000,Op Admin,8765436979$8765434557$8765432349,home#koramangala$office#ecospace,Quality$Analytics
+1206,Selvam,60000,Technical lead,8765436979$8765434557$8765432349,home#koramangala$office#ecospace,Quality$Analytics
+1207,Moorthy,50000,Data Analyst,8765438979$8765034557$8765462349,home#koramangala$office#ecospace,Quality$Analytics
+1208,Kumar,40000,Prograammer,8765438979$8765034557$8765462349,home#koramangala$office#ecospace,Quality$Analytics
+1209,John,50000,QA Lead,8765438979$8765034557$8765462349,home#koramangala$office#ecospace,Quality$Analytics
+1210,Swapna,75000,Technical Manager,8765438979$8765034557$8765462349,home#koramangala$office#ecospace,Quality$Analytics

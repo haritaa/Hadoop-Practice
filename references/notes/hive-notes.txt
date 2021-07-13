@@ -1,0 +1,78 @@
+Hive
+	- What is Hive?
+		- Data Analysis/Warehousing Tool
+		- Structured Data
+		- Schema on Read
+		- Provides SQL like interface (HiveQL) to do analysis
+		- Declarative
+		
+	- Pig vs Hive
+	
+	- Hive vs RDBMS
+	
+	- Hive Architecture
+		- CLI (Hive Shell / Beeline) | Web UI - Hue
+		- Metastore -> Embedded, Local or Remote - RDBMS (Derby, MySQL, Oracle)
+		- Driver
+		- Compiler -> Parsing, Code Generation, Compiling, Optimization, Execution Plan
+		- Execution Runtime -> Query (MR job) Execution and Status Tracking
+		
+	- Hive Datamodel
+		- Schema/Database  - Namespace
+		- Table
+			- Rows
+			- Columns
+			
+	- Data Types    
+		- Primitive - tinyint,smallint,int,bigint,float,double,string,boolean,date,time,timestamp,decimal(10,4)
+		- Complex	- struct, map, array, union
+	
+	- DDL
+		- Create Schema/Table/View/Index
+		- Alter Schema/Table/View/Index
+		- Drop Schema/Table/View/Index
+		
+	- Table Types
+		- Managed Table		=> Lifecyle managed by Hive
+		- External Table	=> Metadata managed by Hive and Table content managed by users/developers
+		- Partitioned Table		=> Data be partitioned based on given set of fields and more efficient while querying
+		- Clustered/Bucketed Table => Data be distributed into different buckets based on hashing and more efficient while sampling and joins
+		- Temporary Table 	=> Limited to current session
+		
+	- File Types - SERDES
+		- CSV/TSV
+		- JSON
+		- TXT
+		- XML
+		- LOGS
+	
+	- File Formats
+		- TEXT
+		- AVRO	=> row based, stores data in binary format, compression, maintains schema, suitable for write heavy workloads
+		- RC
+		- ORC	=> column based, binary format, high compression, compatible with Hive, suitable for read heavy workloads
+		- Parquet => column based, binary format, efficient compression, suitable for read heavy workloads
+		- Sequence	=> binary, compressed, combining lot of smaller files into big file		
+		
+	- DML
+		- INSERT
+		- SELECT
+			- WHERE
+			- GROUP BY
+			- HAVING
+			- ORDER BY | SORT BY
+			- JOIN
+			- LIMIT
+			
+	- LOAD DATA 'filepath' INTO 'table'
+	- INSERT DIRECTORY 'filepath' AS 'query'			
+			
+	- Views
+		- Normal Views
+		- Materialized Views
+			
+	- Builtin Functions
+		
+	- UDF (User Defined Function)
+	- UDAF (User Defined Aggregate Function)		
+	- UDTF (User Defined Table Generating Functions)

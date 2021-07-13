@@ -1,0 +1,243 @@
+
+Introducton to Bigdata
+==========================
+What  is Bigdata?
+Why Bigdata?
+Challanges in Bigdata
+Bigdata Usecases
+Limitations of traditional BI architecture
+Solution to overcome limitations what we have with traditional BI arch
+
+Tech Stack to build Bigdata apps
+
+What is Hadoop?
+	
+Different Hadoop Modes
+Hadoop Components
+	- HDFS	- Distributed Storage
+	- MR	- Distributed Processing
+	- YARN	- Resource Management
+	
+	- COMMON
+Hadoop Architecture
+Hadoop 1.x vs 2.x vs 3.x
+Hadoop Setup and Configuration
+
+HDFS
+=======
+	- Namenode		- Manages the metadata -> list of files, block details, replication, access details, ...
+	- Datanode		- Stores the data
+	- Secondary Namenode	- Backup of metadata. Default every one hour. Manually start.
+	
+	- Standby Namenode	- Active backup/stanby for primary Namenode. Provides HA.
+	- Namenode Federation
+		
+	- Block			- Chunk(s) of file. Default Size - 128 MB
+	- BlockReport	- List of blocks and details
+	
+	- start-dfs.sh
+	- hadoop fs
+		- ls
+		- mkdir
+		- put s3://bigdata/training	/user/training	
+		- get /user/training s3://bigdata/training
+		- copyFromLocal 
+		- copyToLocal
+		- cat
+		- du
+		- df
+		
+	- hdfs dfs
+
+HDFS CLI Commands
+	- List files
+	  hadoop fs -ls /
+	  
+	- Create directory
+	  hadoop fs -mkdir /
+	  
+	- Copy files from Local
+	  hadoop fs -put s3://bigdata/input /user/training/input
+	  hadoop fs -copyFromLocal /home/bigdata/input
+	  
+	- Copy files within HDFS
+	  hadoop fs -cp /user/training/input1 /user/training/input2
+	  
+	  Hadoop 
+		|_ HDFS
+		|_ S3
+		|_ Azure Blob
+		...
+	  
+	- Move files
+		hadoop fs -mv /user/training/input1 /user/training/input2
+		
+	- Remove directory
+		hadoop fs -rm /user/training/input1/input.txt
+		hadoop fs -rmdir /user/training/input1/
+		hadoop fs -rmr /user/training/input1/
+	
+	- View file content
+	   hadoop fs -cat /user/training/input1/input.txt
+	   
+Map Reduce (MR)
+===============	
+	Input -> Input Split -> Map -> Shuffle -> Reduce -> Output
+	   
+MR1
+	- Job Tracker
+		
+	- Task Tracker
+	   
+MR2/YARN
+	- Resource Manager (RM)
+	    - Cluster wide Resource Management / Allocation
+		- Applications Manager -> Manages MR applications
+		- Scheduler -> Scheduling of MR Jobs
+			- Capacity Scheduler
+				- Multi tenant
+				- Reserves capacity for each tenant [organization/team]
+			- Fair Scheduler
+				- Ensures "fair" allocation for resources
+				
+	- Node Manager (NM)
+		- Managing the node level resources
+		- Sends resource stats to RM
+		- Provisioning the containers
+		
+	- App Master
+		- Manage the MR job life cycle
+		- Manages and Tracks the containers
+		- Negotiate with RM to allocate resources
+		- Request NM to provision the container
+		
+	- Container
+		- Abstraction of a resources to run Map/Reduce tasks
+		- CPU, Memory, Disk and Network
+		- Map/Reduct Task
+			
+	- Job History Server
+		
+	
+HDFS File Formats
+==================
+Text
+Sequence File
+Avro
+Parquet
+ORC
+
+Compression Techniques
+====================
+GZIP
+BZIP2
+LZO
+Snappy
+	
+MR Program Structure
+====================
+	- Main
+		- Create Job	<- Configuration, Job Name
+		- Set Main Class Name
+		- Set Mapper
+		- Set Reducer
+		- Input File Path
+		- Output File Path
+		
+		
+	- Mapper
+		- map
+			- logic to do map operation
+		
+	- Reducer
+		- reduce
+			- logic to do reduce operation
+			
+	- Combiner
+		- local reducers
+		
+	- Partitioner
+	
+	- Map Side Join
+	
+	- Reduce Side Join
+	
+	- Distributed Cache -> < 150 MB	
+	
+	- Counters
+		- File System Counters
+		- Job Counters
+		- MR Counters
+	
+			
+Execute MR Program
+==================
+1) Prepare input data
+2) Compile and package MR program as JAR
+3) hadoop jar <jar-name> <main-class-name> <input-path> <output-path> -> submits MR program to YARN
+4) Verify the output
+
+Wordcount MR Program
+====================
+
+STEP 1: Connect to bigdata-box vm and start HDFS
+		start-dfs.sh
+				
+STEP 2: jps
+		NameNode
+		DataNode
+		SecondaryNameNode
+		
+	 	#Verify Logs
+		/opt/hadoop/logs
+		
+		#If NameNode not started
+		stop-dfs.sh
+		hdfs namenode -format
+		start-dfs.sh
+
+STEP 3: Listing HDFS root directory
+		hadoop fs -ls /
+		
+STEP 4: Create directory structure as follows
+		/user/training/wordcount/input
+		
+		hadoop fs -mkdir /user
+		hadoop fs -mkdir /user/training
+		hadoop fs -mkdir /user/training/wordcount
+		hadoop fs -mkdir /user/training/wordcount/input
+		
+		hadoop fs -ls /user
+		hadoop fs -ls /user/training
+		hadoop fs -ls /user/
+		
+STEP 5: Copy file from local to hdfs
+		cat ~/sap-ariba_bigdata/labs/dataset/wordcount/wordcount-input.txt
+		hadoop fs -put ~/sap-ariba_bigdata/labs/dataset/wordcount/wordcount-input.txt /user/training/wordcount/input
+		
+STEP 6: View copied file details
+		hadoop fs -cat /user/training/wordcout/input/wordcount-input.txt
+
+STEP 7: Write a MR program to do Wordcount	
+
+STEP 8: Compile and package MR program as JAR
+
+STEP 9: Start YARN
+		start-yarn.sh
+		
+STEP 10:jps
+		ResourceManager
+		NodeManager
+		
+STEP 11: hadoop jar <jar-name> <main-class-name> <input-path> <output-path> -> submits MR program to YARN
+
+STEP 12: Verify the output		
+			
+			
+	
+
+	
+	
+	
+	
+	

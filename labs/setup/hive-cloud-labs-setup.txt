@@ -1,0 +1,50 @@
+STEP 1: Download Putty and setup
+		https://the.earth.li/~sgtatham/putty/latest/w64/putty.exe
+		
+SETP 2: Download Git Repository and Extract to local directory
+		https://github.com/asaravanakumar/danskeit_hadoop-pyspark
+		
+STEP 3: Open Putty
+		Enter Host Name: ubuntu@<cloud-labs-ip>
+		Connection -> SSH -> Auth -> Select private key file (from the location where you've extracted the git repo)
+		Enter custom name in the Saved Sessions and Save
+		Open
+		
+STEP 4: Connect to cloud labs box and run below command
+		ssh-keygen -f "/home/ubuntu/.ssh/known_hosts" -R "localhost"
+		ssh localhost
+		logout
+		
+STEP 5: Start HDFS
+		start-dfs.sh
+		
+STEP 6: Start YARN
+		start-yarn.sh
+		
+STEP 7: Start Hive Metastore
+		hive --service metastore &
+		
+STEP 8: Start Hive Server
+		hive --service hiveserver2 &
+		
+STEP 9: Connect to Hive using Beeline
+		beeline --silent=true -u jdbc:hive2://localhost:10000 username password
+		
+STEP 10: Execute Hive Queries
+		show databases;
+		!quit
+		
+STEP 11: Start Hue Server
+		sudo /opt/hue/build/env/bin/supervisor &
+		
+STEP 12: Open browser and enter below URL to access Hue
+		http://localhost:8888
+		
+STEP 13: Login into Hue with below credentials
+		
+		Username: hive
+		Password: hive
+		
+STEP 14: Clone Git Repository
+		cd /home/ubuntu/
+		git clone https://github.com/asaravanakumar/danskeit_hadoop-pyspark.git
