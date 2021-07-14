@@ -22,10 +22,10 @@ STEP 6: Start YARN
 		start-yarn.sh
 		
 STEP 7: Start Hive Metastore
-		hive --service metastore &
+		nohup hive --service metastore >/dev/null 2>&1 &
 		
 STEP 8: Start Hive Server
-		hive --service hiveserver2 &
+		nohup hive --service hiveserver2 >/dev/null 2>&1 &
 		
 STEP 9: Connect to Hive using Beeline
 		beeline --silent=true -u jdbc:hive2://localhost:10000 username password
@@ -35,7 +35,7 @@ STEP 10: Execute Hive Queries
 		!quit
 		
 STEP 11: Start Hue Server
-		sudo /opt/hue/build/env/bin/supervisor &
+		sudo nohup /opt/hue/build/env/bin/supervisor >/dev/null 2>&1 &
 		
 STEP 12: Open browser and enter below URL to access Hue
 		http://localhost:8888

@@ -1,0 +1,30 @@
+#HBase Shell
+$ hbase shell
+
+#HBase Shell Commands
+status		=> Provides the status of HBase, for example, the number of servers.
+version 	=> Provides the version of HBase being used.
+table_help 	=> Provides help for table-reference commands.
+whoami 		=> Provides information about the user.
+
+#DDL Commands
+create 		=> Creates a table.
+list 		=> Lists all the tables in HBase.
+disable 	=> Disables a table.
+is_disabled => Verifies whether a table is disabled.
+enable 		=> Enables a table.
+is_enabled  => Verifies whether a table is enabled.
+describe 	=> Provides the description of a table.
+alter 		=> Alters a table.
+exists 		=> Verifies whether a table exists.
+drop 		=> rops a table from HBase.
+drop_all 	=> Drops the tables matching the ‘regex’ given in the command.
+
+#DML Commands
+put 		=> Puts a cell value at a specified column in a specified row in a particular table.
+get 		=> Fetches the contents of row or a cell.
+delete 		=> Deletes a cell value in a table.
+deleteall 	=> Deletes all the cells in a given row.
+scan 		=> Scans and returns the table data.
+count 		=> Counts and returns the number of rows in a table.
+truncate 	=> Disables, drops, and recreates a specified table.

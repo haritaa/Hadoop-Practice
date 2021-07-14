@@ -1,0 +1,95 @@
+#Create Table
+#create ‘<table name>’,’<column family>’ 
+create 'employee', 'personal data', 'professional data'
+
+create 'employee1', {NAME => 'personal data', COMPRESSION => 'GZ'}, 'professional data'
+
+{NAME => 'personal data', VERSIONS => '1', EVICT_BLOCKS_ON_CLOSE => 'false', NEW_VERSION_BEHAVIOR => 'f
+alse', KEEP_DELETED_CELLS => 'FALSE', CACHE_DATA_ON_WRITE => 'false', DATA_BLOCK_ENCODING => 'NONE', TT
+L => 'FOREVER', MIN_VERSIONS => '0', REPLICATION_SCOPE => '0', BLOOMFILTER => 'ROWCOL', CACHE_INDEX_ON_WRI
+TE => 'false', IN_MEMORY => 'false', CACHE_BLOOMS_ON_WRITE => 'false', PREFETCH_BLOCKS_ON_OPEN => 'fals
+e', COMPRESSION => 'NONE', BLOCKCACHE => 'true', BLOCKSIZE => '65536'}
+
+#Describe Table
+describe 'employee'
+
+#List Tables
+list
+
+#Disable Table
+disable 'employee'
+disable_all 'r.*'
+
+#Enable Table
+enable ‘employee’
+
+#Alter Table
+alter 'employee','delete'⇒'professional'
+alter 'employee', 'pressional data'=>{'compression type'=>'gz', }
+
+#Insert Data
+#put ’<table name>’,’row1’,’<colfamily:colname>’,’<value>’
+put 'employee','1','personal data:name','Anand'
+put 'employee','1','personal data:city','Bangalore'
+put 'employee','1','professional data:designation','Manager'
+put 'employee','1','professional data:salary','50000'
+
+put 'employee','2','personal data:name','Vivek'
+put 'employee','2','personal data:city','Bangalore'
+put 'employee','2','professional data:designation','Developer'
+put 'employee','2','professional data:salary','50000'
+
+#View Table Data
+#scan '<table name>'
+scan 'employee'
+
+#Update Data
+put 'employee','1','personal data:city','Delhi'
+scan 'employee'
+
+#Read Data by RowID
+#get ’<table name>’,’row1’
+get 'employee', '1'
+
+#Read Data by Column
+#get 'table name', ‘rowid’, {COLUMN ⇒ ‘column family:column name ’}
+get 'employee', '1', {COLUMN => 'personal data:name'}
+
+#Delete Specific Cell
+#delete ‘<table name>’, ‘<row>’, ‘<column name >’, ‘<time stamp>’
+delete 'employee', '1', 'personal data:city'
+
+#Delete All Cells
+#deleteall ‘<table name>’, ‘<row>’
+deleteall 'employee','1'
+scan 'employee'
+
+#Count Rows
+#count ‘<table name>’ 
+count 'employee'
+
+#Truncate Table Data
+#truncate 'table name'
+truncate 'employee'
+
+#Disable Table
+disable 'employee'
+
+#Drop Table
+drop ‘employee’
+
+#Create Namespace
+create_namespace 'my_ns'
+
+#create my_table in my_ns namespace
+create 'my_ns:my_table', 'fam'
+
+#drop namespace
+drop_namespace 'my_ns'
+
+#alter namespace
+alter_namespace 'my_ns', {METHOD => 'set', 'PROPERTY_NAME' => 'PROPERTY_VALUE'}
+
+scan 'employee', { FILTER => SingleColumnValueFilter.new(Bytes.toBytes('personal data'),
+      Bytes.toBytes('name'), CompareFilter::CompareOp.valueOf('EQUAL'),
+      BinaryComparator.new(Bytes.toBytes('Arun')))}

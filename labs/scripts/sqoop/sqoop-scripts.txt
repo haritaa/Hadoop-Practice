@@ -1,0 +1,80 @@
+###Sqoop Commands
+
+#Version
+sqoop version
+
+#List Databases
+#sqoop list-databases --connect jdbc:mysql://localhost/ --username root
+sqoop list-databases --connect jdbc:mysql://localhost/ --username sqoop --password sqoop
+
+#List Tables
+sqoop list-tables --connect jdbc:mysql://localhost/sqoop_training --username sqoop --password sqoop
+
+#Import
+sqoop import \
+--connect jdbc:mysql://localhost/sqoop_training \
+--username sqoop \
+--password sqoop \
+--table EMPLOYEE \
+--target-dir /user/training/sqoop \
+--m 1
+
+#Import incremental
+sqoop import \
+--connect jdbc:mysql://localhost/sqoop_training \
+--username sqoop \
+--password sqoop \
+--table EMPLOYEE \
+--incremental <mode>
+--check-column <column name>
+--last value <last check column value>
+
+#View loaded data
+hadoop fs -cat /user/training/sqoop/part-m*
+
+#Import all table
+sqoop import-all-tables \
+--connect jdbc:mysql://localhost/sqoop_training \
+--username sqoop \
+--password sqoop \
+
+##Export data from HDFS to RDBMS
+#Copy Employee data to HDFS for export
+hdfs dfs -mkdir /user/training/empmgmt
+hdfs dfs -mkdir /user/training/empmgmt/export
+hdfs dfs -put ~/sap-ariba_bigdata/labs/dataset/empmgmt/employee1.txt /user/training/empmgmt/export
+
+sqoop export \
+--connect jdbc:mysql://localhost/sqoop_training \
+--username sqoop \
+--password sqoop \
+--table EMPMGMT \
+--export-dir /user/training/empmgmt/export
+
+#sqoop export --connect jdbc:mysql://localhost/sqoop_training --username root --table EMPMGMT --export-dir /user/training/empmgmt/export
+
+#Sqoop Job
+sqoop job --create empjob -- import --connect jdbc:mysql://localhost/sqoop_training --username sqoop --password sqoop --table employee --m 1
+
+#List Jobs
+sqoop job --list
+
+#View Job Detail
+sqoop job --show empjob
+
+#Execute Job
+sqoop job --exec empjob
+
+#SELECT query execution
+sqoop eval \
+--connect jdbc:mysql://localhost/sqoop_training \
+--username sqoop \
+--password sqoop \
+--query "SELECT * FROM EMPLOYEE LIMIT 10"
+
+#INSERT query execution
+sqoop eval \
+--connect jdbc:mysql://localhost/sqoop_training \
+--username sqoop \
+--password sqoop \
+-e "INSERT INTO EMPLOYEE VALUES(110,'Kannan',30,'M',40000,'Manager','IT',1)"

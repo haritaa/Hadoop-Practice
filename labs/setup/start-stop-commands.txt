@@ -13,6 +13,9 @@ mr-jobhistory-daemon.sh start historyserver
 cd $HIVE_HOME
 bin/hiveserver2 &			=> run in the background
 
+#Start HBase
+start-hbase.sh
+
 #Spark Master
 start-master.sh
 
@@ -34,6 +37,9 @@ stop-dfs.sh
 #HiveServer
 ps -ef | grep hive
 kill -9 <hiveserver-pid>
+
+#Stop HBase
+stop-hbase.sh
 
 #Spark Worker
 stop-slaves.sh

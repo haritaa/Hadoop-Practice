@@ -1,0 +1,35 @@
+HBase
+	- What is HBase?
+		- Columnar Database
+		- NoSQL (Not Only SQL)
+		- billions rows x millions of columns
+		- stores data on top of HDFS
+		- random read/write access
+		- scalability
+		
+	- Data Model
+		- NameSpace
+			|
+			Table
+			|_ Row (RowID/Key)
+				|_ Column Family
+						|_ Columns
+			
+			Cell -> ROWID, CF:CI, VERSION (Timestamp)
+			
+			HBase < 0.96 => 3 Versions
+				  > 0.96 => 1 Version
+				  
+	- HBase Architecture
+		- HDFS (Pre-requisite)
+		- HBase Master
+		- Region Server
+		- Zookeeper
+		- HBase Client
+		
+	- HBase Clients
+		- HBase Shell
+		- HBase API (Java, other langs)
+		- HBase REST API
+		- HBase Integration with Hive
+		- HBase Integration with MapReduce

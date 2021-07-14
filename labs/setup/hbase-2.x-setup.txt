@@ -1,0 +1,65 @@
+#Pre-requisites:
+#java 1.8
+#hadoop 3.x.x
+
+#Download HBase
+cd ~/Downloads
+curl https://downloads.apache.org/hbase/stable/hbase-2.2.4-bin.tar.gz -o hbase-2.2.4-bin.tar.gz
+tar xzvf hbase-2.2.4-bin.tar.gz
+
+sudo mv hbase-2.2.4 /opt/hbase
+
+#JAVA_HOME configuration
+sudo nano ~/.bashrc
+#############################
+export JAVA_HOME=/opt/java
+export PATH=$PATH:$JAVA_HOME/bin
+##############################################
+
+#HBASE_HOME configuration
+sudo nano ~/.bashrc
+#############################
+export HBASE_HOME=/opt/hbase
+export PATH=$PATH:$HBASE_HOME/bin
+##############################################
+source ~/.bashrc			=> reloads the changes
+
+#Verify HBase Installation
+hbase version				=> should show HBase version details
+
+#Standalone Mode
+##################################################
+Known Issue #1: Getting below exception while starting HBase due to version incompatibility of Hadoop and HBase
+hbase java.lang.IllegalStateException: The procedure WAL relies on the ability to hsync for proper operation during component failures,
+but the underlying filesystem does not support doing so. Please check the config value of 'hbase.procedure.store.wal.use.hsync' 
+to set the desired level of robustness and ensure the config value of 'hbase.wal.dir' points to a FileSystem mount that can provide it
+
+Fix #1:
+$ nano hbase-site.xml
+####################
+<property>
+  <name>hbase.unsafe.stream.capability.enforce</name>
+  <value>false</value>
+</property>
+#######################
+
+###################################################
+
+#Pseudo Distributed Mode
+$ nano hbase-site.xml
+#######################
+<property>
+  <name>hbase.cluster.distributed</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hbase.unsafe.stream.capability.enforce</name>
+  <value>false</value>
+</property>
+########################
+
+$ nano hbase-env.sh
+########################
+export JAVA_HOME=/opt/java
+########################

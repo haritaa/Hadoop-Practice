@@ -1,0 +1,28 @@
+sudo apt update
+sudo apt-get install mysql-server
+
+#Auto started upon installation. Status check.
+sudo systemctl status mysql
+
+#Stop mysql server
+sudo systemctl stop mysql
+
+#Start mysql server
+sudo systemctl start mysql
+
+#Connect to MySQL server through CLI client
+mysql -u root -p
+(password: [nopassword])
+
+show databases;
+
+##Fix for MySQL client connect issue
+sudo apt remove mysql-server
+sudo apt autoremove
+sudo rm -r /etc/mysql
+sudo apt-get install mysql-server
+sudo vi /etc/mysql/mysql.cnf
+:wq
+sudo apt-get install mysql-server
+sudo mysql -u root -p
+[no passwood]
