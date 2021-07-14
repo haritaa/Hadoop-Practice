@@ -24,10 +24,12 @@ sqoop import \
 --connect jdbc:mysql://localhost/sqoop_training?useSSL=false \
 --username sqoop \
 --password sqoop \
---table EMPLOYEE \
---incremental <mode>
---check-column <column name>
---last value <last check column value>
+--table COUNTRY \
+--target-dir /user/training/sqoop-inc \
+--check-column UPDATE_TIME \
+--incremental lastmodified \
+--last-value '2021-07-14 12:12:38' \
+--m 1
 
 #View loaded data
 hadoop fs -cat /user/training/sqoop/part-m*
