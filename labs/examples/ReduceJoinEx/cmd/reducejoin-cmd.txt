@@ -19,7 +19,7 @@ jar -cvf reducejoin.jar -C build/ .
 hadoop fs -rm -r /user/training/mapredjoin/output
 
 #Submit mapredjoin MapReduce Job
-cd ~/danskeit_hadoop-pyspark/labs/examples/mapredjoinEx
+cd ~/danskeit_hadoop-pyspark/labs/examples/ReduceJoinEx
 hadoop jar reducejoin.jar com.examples.hadoop.mapred.ReduceJoinEx /user/training/mapredjoin/input/custs /user/training/mapredjoin/input/txns /user/training/mapredjoin/output
 
 #View output

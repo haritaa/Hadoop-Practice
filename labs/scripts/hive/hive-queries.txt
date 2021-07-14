@@ -50,7 +50,7 @@ DROP TABLE IF EXISTS employee;
 DROP SCHEMA hive_training;
 
 # Create external table
-CREATE EXTERNAL TABLE IF NOT EXISTS employee ( eid int, name String,
+CREATE EXTERNAL TABLE IF NOT EXISTS employee_ext ( eid int, name String,
 salary String, designation String)
 COMMENT 'Employee details'
 ROW FORMAT DELIMITED
