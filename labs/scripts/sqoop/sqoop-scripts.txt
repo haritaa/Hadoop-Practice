@@ -12,7 +12,7 @@ sqoop list-tables --connect jdbc:mysql://localhost/sqoop_training?useSSL=false -
 
 #Import
 sqoop import \
---connect jdbc:mysql://localhost/sqoop_training \
+--connect jdbc:mysql://localhost/sqoop_training?useSSL=false \
 --username sqoop \
 --password sqoop \
 --table EMPLOYEE \
@@ -21,7 +21,7 @@ sqoop import \
 
 #Import incremental
 sqoop import \
---connect jdbc:mysql://localhost/sqoop_training \
+--connect jdbc:mysql://localhost/sqoop_training?useSSL=false \
 --username sqoop \
 --password sqoop \
 --table EMPLOYEE \
@@ -45,16 +45,16 @@ hdfs dfs -mkdir /user/training/empmgmt/export
 hdfs dfs -put ~/sap-ariba_bigdata/labs/dataset/empmgmt/employee1.txt /user/training/empmgmt/export
 
 sqoop export \
---connect jdbc:mysql://localhost/sqoop_training \
+--connect jdbc:mysql://localhost/sqoop_training?useSSL=false \
 --username sqoop \
 --password sqoop \
 --table EMPMGMT \
 --export-dir /user/training/empmgmt/export
 
-#sqoop export --connect jdbc:mysql://localhost/sqoop_training --username root --table EMPMGMT --export-dir /user/training/empmgmt/export
+#sqoop export --connect jdbc:mysql://localhost/sqoop_training?useSSL=false --username root --table EMPMGMT --export-dir /user/training/empmgmt/export
 
 #Sqoop Job
-sqoop job --create empjob -- import --connect jdbc:mysql://localhost/sqoop_training --username sqoop --password sqoop --table employee --m 1
+sqoop job --create empjob -- import --connect jdbc:mysql://localhost/sqoop_training?useSSL=false --username sqoop --password sqoop --table employee --m 1
 
 #List Jobs
 sqoop job --list
@@ -67,14 +67,14 @@ sqoop job --exec empjob
 
 #SELECT query execution
 sqoop eval \
---connect jdbc:mysql://localhost/sqoop_training \
+--connect jdbc:mysql://localhost/sqoop_training?useSSL=false \
 --username sqoop \
 --password sqoop \
 --query "SELECT * FROM EMPLOYEE LIMIT 10"
 
 #INSERT query execution
 sqoop eval \
---connect jdbc:mysql://localhost/sqoop_training \
+--connect jdbc:mysql://localhost/sqoop_training?useSSL=false \
 --username sqoop \
 --password sqoop \
 -e "INSERT INTO EMPLOYEE VALUES(110,'Kannan',30,'M',40000,'Manager','IT',1)"
