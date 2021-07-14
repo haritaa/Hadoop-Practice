@@ -5,10 +5,10 @@ sqoop version
 
 #List Databases
 #sqoop list-databases --connect jdbc:mysql://localhost/ --username root
-sqoop list-databases --connect jdbc:mysql://localhost/ --username sqoop --password sqoop
+sqoop list-databases --connect jdbc:mysql://localhost/?useSSL=false --username sqoop --password sqoop
 
 #List Tables
-sqoop list-tables --connect jdbc:mysql://localhost/sqoop_training --username sqoop --password sqoop
+sqoop list-tables --connect jdbc:mysql://localhost/sqoop_training?useSSL=false --username sqoop --password sqoop
 
 #Import
 sqoop import \
