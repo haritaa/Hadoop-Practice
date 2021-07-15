@@ -1,0 +1,100 @@
+
+Spark Best Practices
+====================
+1) Use DataFrame over RDD
+		- Tungsten
+		- Catalyst Optimizer
+		
+		df.select("name")
+	
+2) Use coalesce() over repartition()
+
+3) Use mapPartitions() over map()
+	- heavy initialization during every query execution
+	
+	df.map(process)
+	
+	def process(item) {
+		db connection
+		query execution
+		return
+	}
+
+4) Use Serialized data format’s - Avro, Parquest, ORC
+	
+5) Avoid UDF’s (User Defined Functions)
+
+6) Caching data in memory
+		trans = spark.read.format("json").path().load()
+		activeTrans = df.filter("active trans")
+		activeTrans.cache()
+		activeTrans.persist(storageLevel)
+		
+		activeTrans = df.filter("inactive")
+		activeTrans.unpersist()
+		
+
+7) Reduce expensive Shuffle operations
+		reduceByKey, groupByKey, join, aggregateByKey
+
+		200 partitions
+		
+8) Disable DEBUG & INFO Logging
+	- configure appropriate log level
+	- debug or info messages should got log
+
+
+Spark Performance Tuning
+========================
+Data Serialization
+	- Java Serialization vs Kryo Serialization
+
+	#Create Spark Session with Kryo Serialization
+	spark = SparkSession \
+    .builder \
+    .appName("LoanStreamingAnalysis") \
+    .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer") \
+    .getOrCreate()
+	
+Memory Tuning
+	- Storage Memory
+	- Execution Memory
+
+	spark.memory.fraction=0.8
+	spark.memory.storageFraction=0.5
+	
+Spark SQL Tuning
+=================
+Use Columnar format when Caching
+	spark.conf.set("spark.sql.inMemoryColumnarStorage.compressed", true)
+	
+Spark Cost-Based Optimizer - lot of joins / multi joins
+	spark.conf.set("spark.sql.cbo.enabled", true)
+	
+Use Optimal value for Shuffle Partitions
+	spark.conf.set("spark.sql.shuffle.partitions",30) //Default value is 200	
+	
+Use Broadcast Join when your Join data can fit in memory
+	spark.conf.set("spark.sql.autoBroadcastJoinThreshold",10485760) //100 MB by default
+	
+Spark 3.0 – Using coalesce & repartition on SQL
+	SELECT /*+ COALESCE(3) */ * FROM EMP_TABLE
+	SELECT /*+ REPARTITION(3) */ * FROM EMP_TABLE
+	SELECT /*+ REPARTITION(c) */ * FROM EMP_TABLE
+	SELECT /*+ REPARTITION(3, dept_col) */ * FROM EMP_TABLE
+	SELECT /*+ REPARTITION_BY_RANGE(dept_col) */ * FROM EMP_TABLE
+	SELECT /*+ REPARTITION_BY_RANGE(3, dept_col) */ * FROM EMP_TABLE
+	
+	
+Spark 3.0 – Enable Adaptive Query Execution –
+	spark.conf.set("spark.sql.adaptive.enabled",true)
+	
+	
+Spark 3.0 – Coalescing Post Shuffle Partitions
+	spark.conf.set("spark.sql.adaptive.coalescePartitions.enabled",true)
+	
+	
+Spark 3.0 – Optimizing Skew Join
+	spark.conf.set("spark.sql.adaptive.skewJoin.enabled",true)
+
+	

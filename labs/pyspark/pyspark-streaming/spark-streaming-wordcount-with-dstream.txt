@@ -1,0 +1,34 @@
+### Spark Streaming Example with DStream
+#Step 1: Open cloud labs terminal and start netcat utility
+        nc -lk 9999
+
+#Step 2: Start Spark Shell and Run below Spark Streaming program
+
+from pyspark import SparkContext
+from pyspark.streaming import StreamingContext
+
+# Create a local StreamingContext with two working thread and batch interval of 10 seconds
+sc = SparkContext("local[2]", "NetworkWordCount")
+ssc = StreamingContext(sc, 10)
+
+# Create a DStream that will connect to hostname:port, like localhost:9999
+lines = ssc.socketTextStream("localhost", 9999)
+
+# Split each line into words
+words = lines.flatMap(lambda line: line.split(" "))
+
+# Count each word in each batch
+pairs = words.map(lambda word: (word, 1))
+wordCounts = pairs.reduceByKey(lambda x, y: x + y)
+
+# Print the first ten elements of each RDD generated in this DStream to the console
+wordCounts.pprint()
+
+#Windowing Concept: Reduce last 30 seconds of data, every 10 seconds
+#windowedWordCounts = pairs.reduceByKeyAndWindow(lambda x, y: x + y, lambda x, y: x - y, 30, 10)
+
+#Print the first ten elements of each RDD generated in this DStream to the console
+#windowedWordCounts.print()
+
+// Start the computation
+ssc.start(); ssc.awaitTermination() // Wait for the computation to terminate

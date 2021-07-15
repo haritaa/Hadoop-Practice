@@ -1,0 +1,13 @@
+pyspark
+===========
+#Connect to pyspark in standalone mode with single thread
+$pyspark --master local
+
+#Connect to pyspark in standalone mode with multiple threads
+$pyspark --master local[2]
+
+#Connect to pyspark in cluster mode with spark cluster manager
+$pyspark --master spark://<master-ip>:7077
+
+#Connect to pyspark in cluster mode with yarn cluster manager
+$pyspark --master yarn

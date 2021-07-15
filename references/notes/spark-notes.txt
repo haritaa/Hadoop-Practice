@@ -1,0 +1,122 @@
+Spark
+	- Spark Basics
+	- In memory distributed data processing
+	- Spark Modes
+		- Local
+		- Cluster
+			- Spark Cluster Manager (Standalone)
+			- YARN
+			- MESOS
+			- K8s
+			
+	- Storage
+		- RDD (Resilient Distributed Dataset)
+			- Immutable
+			- Distributed
+			- Lazy Evaluated
+			- Fault Tolerant
+		- Underlying data structure to store data
+		
+	- Processing
+		- Operations
+			- Transformations				
+			- Actions
+				
+	- Spark Architecture (Stand alone)
+		- Master (Cluster Manager)
+		- Workers
+		- Driver => Spark Application => Spark Context => Spark Session
+		
+		- spark-shell [write spark programs interactively]
+		- pyspark [wtire python programs interactively]
+		
+		- Spark Applications => Scala, Java, Python, R
+		
+		- PySpark (py4j)
+		
+	- Spark Modules
+		- Spark Core
+			- Spark Context
+			- Spark Session => provids abstraction on different contexts viz. Spark Context, SQL Context, Hive Context
+			- RDD
+			- How to create RDD
+				- Reading data from external file
+				- Parallelizing the collection
+			- Transformations => produce new RDD
+				- filter
+				- map
+				- flatMap
+				- join
+				- union
+				- groupByKey
+				- reduceByKey
+				- aggregateByKey
+			- Actions => produce result
+				- count
+				- sum
+				- reduce
+				- groupBy
+				- countByKey
+			
+			- RDD Lineage => DAG
+			
+			- Storage Levels
+			
+			- Broadcast Variable => Immutable, shared across all workers / tasks
+			- Accumulator => Mutable, shared object. Helps to keep track of the counters.
+			
+			- rdd.persist()
+			- rdd.saveAsTextFile("result.txt")
+			
+		- Spark SQL
+			- Spark SQL Architecture
+			- Spark SQL Context
+			- DataFrame API
+				- create from existing RDD
+				- reading data from external file
+			- Data Sources
+				- Avro
+				- Parquet
+				- ORC
+				- Text
+				- CSV
+				- RDBMS
+			- SQL queries
+			- DataSet API
+				- strongly typed
+				- optimized
+			- Hive on Spark
+			- Spark Hive Context
+			
+		- Spark Streaming
+			- What is Streaming?
+			- DStream (RDD based)
+				- Streaming Context
+				- Input/Source -> Socket, File (HDFS, S3, etc..), Kafka, Custom Receiver
+				- Processing   -> Transformations and Actions
+				- Output/Sink -> Console, File, Kafka, Kinesis, Custom Writer
+				
+				- Batch Interval (5 mins)
+				- Window Operations
+					- Window Duration (1 hr)
+					- Sliding Interval (15 mins) 
+					
+				- Check Pointing
+				- Stateful vs Stateless
+				- updateStateByKey
+				- transform()
+				
+			- Structured Streaming (DataFrame based)
+
+				- Input/Source -> Socket, File (HDFS, S3, etc..), Kafka, Custom Receiver
+				- Processing   -> Transformations and Actions
+				- Output/Sink -> Console, File, Kafka, Kinesis, Custom Writer
+				
+				- DataFrameStreamReader
+				- DataFrameStreamWriter				
+				
+			- Kafka	
+			
+		- Spark ML
+			
+		- Spark GraphX

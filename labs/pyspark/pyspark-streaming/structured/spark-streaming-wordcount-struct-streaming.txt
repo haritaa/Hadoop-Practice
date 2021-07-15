@@ -1,0 +1,36 @@
+### Spark Streaming Example with Structured Streaming
+#Step 1: Open cloud labs terminal and start netcat utility
+        nc -lk 9999
+
+#Step 2: Start PySpark and Run below Spark Streaming program
+
+# Create DataFrame representing the stream of input lines from connection to localhost:9999
+lines = spark\
+	.readStream\
+	.format('socket')\
+	.option('host', host)\
+	.option('port', port)\
+	.load()
+
+# Split the lines into words
+from pyspark.sql.functions import explode
+from pyspark.sql.functions import split
+
+words = lines.select(
+	# explode turns each item in an array into a separate row
+	explode(
+		split(lines.value, ' ')
+	).alias('word')
+)
+
+# Generate running word count
+wordCounts = words.groupBy('word').count()
+
+# Start running the query that prints the running counts to the console
+query = wordCounts\
+	.writeStream\
+	.outputMode('complete')\
+	.format('console')\
+	.start()
+
+query.awaitTermination()

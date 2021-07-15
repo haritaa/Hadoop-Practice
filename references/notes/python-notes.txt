@@ -1,0 +1,132 @@
+
+Python 
+	- History
+		- Created by Guido van Rossum
+		- Created late 1980s
+		- First Released in 1991
+		- Python 2.0 Released in 2000
+		- Python 3.0 Released in 2008
+		- Python 3.9.1 - Latest stable version
+	- Python (Core) Philosophy
+		- Beautiful is better than ugly.
+		- Explicit is better than implicit.
+		- Simple is better than complex.
+		- Complex is better than complicated.
+		- Readability counts.
+	- Python (Design) Philosophy
+		- there should be one—and preferably only one—obvious way to do it
+	
+	- Languange Features
+		- Multi Paradigm Language
+		- Interpreted
+		- Dynamic
+		- Structured
+		- Object Oriented
+		- Functional
+		
+	- Installation
+	- scalac -version
+	- scala -version
+	- REPL
+	- Intellij IDE
+	
+	
+	- Basic Syntax
+		- Uses whitespace indentation to delimit blocks instead curly brackets
+		
+		- Semicolons after statements are optional
+				
+	- Naming Conventions
+	- Identifiers
+	- Comments
+	- Datatypes - bool, bytearray, bytes, complex, dict, ellipsis, float, frozenset, int, list, NoneType, NotImplementedType, range, set, str, tuple
+	- Variables/Values
+	- Operators
+		- Arithmetic (+, -, *, /, //, %, **, @)
+		- Relational, Logical, Assignment, Bitwise
+	- Scope 
+	- Access Modifiers - private, protected, default (public)
+	- Type Inference
+	- Control Structures - IF Else
+	- Loops - While, Do...While, For
+	- Strings
+	- Arrays
+	- Tuples
+	
+	- Functional Programming	
+		- Functions
+			- function with sigle, multi, no args
+			- higer order fucntions
+			- currying
+			- clousures
+			
+		- Methods
+			- methods with var-args
+			- methods with default values
+			- methods with multiple parameters
+			- methods with no parameter
+			- methods with call by name
+		
+	- Object Oriented Programming
+		- Class	=> template or blueprint
+		- Object => instance of class
+			- Fields
+			- Methods
+		- Inheritance => is-a relationship, inheriting the general behaviors from parent
+		- Abstraction => exposing essential details
+		- Encapsulation => hiding the details
+		- Polymorphism => ability to call corresponding methods out of multiple implementations during compile/run time
+		
+		- Trait - similar to interface with some implementation
+		- Mixin 
+		
+	- Collections [Immutable]
+		- List => Ordered Collection. LinkedList. Store collection of objects and access using index 
+		- Sequence			
+		
+		- Set => Unordered Collection. Unique
+			- HashSet => Faster Retrival
+			- TreeSet => Sorted ["Australia","China","India"]
+			- ListSet => Ordered
+			
+		- Map => Key Value Pair
+			- HashMap
+			- TreeMap
+			- ListMap		
+	
+		- Option => container object
+			None
+			Some(Object)
+			
+		- Monads => functional programming concept to abstract the data.
+				 => with monads programmer can turn complicated sequence of functions into a succinct pipeline that abstracts away auxiliary data management, control flow, or side-effects 		
+				 => e.g: Option
+				 => e.g: list.filter().map().reduce()
+			
+	- Packages / Import
+	- Exception Handling
+	
+
+Scala Object Oriented Programming
+=================================
+
+//Abstract Class			
+abstract class Account { def showAccountDetails(){}}		
+
+//Inheritance
+class Savings extends Account { override def showAccountDetails(){}}
+
+//Inheritance with Trait
+class Deposit extends Account with ForeClosable  {}
+
+//Multiple Inheritance with Trait (Mixin)
+class Loan extends Account with ForeClosable with Closable {}
+
+//Trait
+trait ForeClosable { def processClousure(println("A") {}}
+
+trait Closable { def processClousure() {println("B"} }
+
+//Polymorphism
+val account:Account = new Savings()
+account.showAccountDetails()

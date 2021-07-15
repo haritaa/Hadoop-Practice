@@ -1,0 +1,28 @@
+Spark 3.0 Features
+===================
+
+Adaptive Query execution also called AQE
+Language Version Upgrades
+New UI for Structure Streaming
+Datasource to Read Binary Files
+Support Recursive folders
+Support Multi char delimiter (||)
+New Spark build-in functions
+DataFrame Tail
+Added repartition to SQL queries
+Better ANSI SQL compatible
+Switch to Proleptic Gregorian calendar
+
+
+
+New functions
+=============
+inh,cosh,tanh,asinh,acosh,atanh,any,bit_and,bit_or,bit_count,bit_xor,
+bool_and,bool_or,count_if,date_part,extract,forall,from_csv,
+make_date,make_interval,make_timestamp,map_entries
+map_filter,map_zip_with,max_by,min_by,schema_of_csv,to_csv
+transform_keys,transform_values,typeof,version
+xxhash64
+
+
+spark.sql("SELECT /*+ REPARTITION(20) */ * FROM RANGE_TABLE")

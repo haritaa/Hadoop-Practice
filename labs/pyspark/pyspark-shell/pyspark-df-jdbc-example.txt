@@ -1,0 +1,27 @@
+#pyspark shell
+pyspark --jars /usr/share/java/mysql-connector-java.jar
+
+#Read data from db
+jdbcDF = spark.read \
+  .format("jdbc") \
+  .option("url", "jdbc:mysql://localhost:3306/pyspark_training?useSSL=false") \
+  .option("driver", "com.mysql.jdbc.Driver") \
+  .option("dbtable", "EMPLOYEE") \
+  .option("user", "pyspark") \
+  .option("password", "pyspark") \
+  .load()
+
+jdbcDF.printSchema()
+jdbcDF.show()
+
+jdbcDF1 = jdbcDF.filter(jdbcDF["SALARY"] > 50000)
+
+#Write data to db
+jdbcDF1.write \
+    .format("jdbc") \
+    .option("url", "jdbc:mysql://localhost:3306/pyspark_training?useSSL=false") \
+	.option("driver", "com.mysql.jdbc.Driver") \
+    .option("dbtable", "EMPLOYEE1") \
+    .option("user", "pyspark") \
+    .option("password", "pyspark") \
+    .save()
