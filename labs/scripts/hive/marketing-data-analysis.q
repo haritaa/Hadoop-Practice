@@ -52,7 +52,7 @@ DESCRIBE marketing_data;
 DESCRIBE marketing_data_view;
 
 #Load Data
-LOAD DATA LOCAL INPATH '/home/ubuntu/aq_hive/labs/dataset/bankmarket/bankmarketdata-with-headers.csv' OVERWRITE INTO TABLE marketing_data;
+LOAD DATA LOCAL INPATH '/home/ubuntu/danskeit_hadoop-pyspark/labs/dataset/bankmarket/bankmarketdata.csv' OVERWRITE INTO TABLE marketing_data;
 
 #Fetch marketing data
 SELECT * FROM marketing_data;

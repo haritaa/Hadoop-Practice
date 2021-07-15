@@ -5,14 +5,14 @@ sqoop version
 
 #List Databases
 #sqoop list-databases --connect jdbc:mysql://localhost/ --username root
-sqoop list-databases --connect jdbc:mysql://localhost/ --username sqoop --password sqoop
+sqoop list-databases --connect jdbc:mysql://localhost/?useSSL=false --username sqoop --password sqoop
 
 #List Tables
-sqoop list-tables --connect jdbc:mysql://localhost/sqoop_training --username sqoop --password sqoop
+sqoop list-tables --connect jdbc:mysql://localhost/sqoop_training?useSSL=false --username sqoop --password sqoop
 
 #Import
 sqoop import \
---connect jdbc:mysql://localhost/sqoop_training \
+--connect jdbc:mysql://localhost/sqoop_training?useSSL=false \
 --username sqoop \
 --password sqoop \
 --table EMPLOYEE \
@@ -21,13 +21,15 @@ sqoop import \
 
 #Import incremental
 sqoop import \
---connect jdbc:mysql://localhost/sqoop_training \
+--connect jdbc:mysql://localhost/sqoop_training?useSSL=false \
 --username sqoop \
 --password sqoop \
---table EMPLOYEE \
---incremental <mode>
---check-column <column name>
---last value <last check column value>
+--table COUNTRY \
+--target-dir /user/training/sqoop-inc \
+--check-column UPDATE_TIME \
+--incremental lastmodified \
+--last-value '2021-07-14 12:12:38' \
+--m 1
 
 #View loaded data
 hadoop fs -cat /user/training/sqoop/part-m*
@@ -45,16 +47,16 @@ hdfs dfs -mkdir /user/training/empmgmt/export
 hdfs dfs -put ~/sap-ariba_bigdata/labs/dataset/empmgmt/employee1.txt /user/training/empmgmt/export
 
 sqoop export \
---connect jdbc:mysql://localhost/sqoop_training \
+--connect jdbc:mysql://localhost/sqoop_training?useSSL=false \
 --username sqoop \
 --password sqoop \
 --table EMPMGMT \
 --export-dir /user/training/empmgmt/export
 
-#sqoop export --connect jdbc:mysql://localhost/sqoop_training --username root --table EMPMGMT --export-dir /user/training/empmgmt/export
+#sqoop export --connect jdbc:mysql://localhost/sqoop_training?useSSL=false --username root --table EMPMGMT --export-dir /user/training/empmgmt/export
 
 #Sqoop Job
-sqoop job --create empjob -- import --connect jdbc:mysql://localhost/sqoop_training --username sqoop --password sqoop --table employee --m 1
+sqoop job --create empjob -- import --connect jdbc:mysql://localhost/sqoop_training?useSSL=false --username sqoop --password sqoop --table employee --m 1
 
 #List Jobs
 sqoop job --list
@@ -67,14 +69,14 @@ sqoop job --exec empjob
 
 #SELECT query execution
 sqoop eval \
---connect jdbc:mysql://localhost/sqoop_training \
+--connect jdbc:mysql://localhost/sqoop_training?useSSL=false \
 --username sqoop \
 --password sqoop \
 --query "SELECT * FROM EMPLOYEE LIMIT 10"
 
 #INSERT query execution
 sqoop eval \
---connect jdbc:mysql://localhost/sqoop_training \
+--connect jdbc:mysql://localhost/sqoop_training?useSSL=false \
 --username sqoop \
 --password sqoop \
 -e "INSERT INTO EMPLOYEE VALUES(110,'Kannan',30,'M',40000,'Manager','IT',1)"
