@@ -1,7 +1,5 @@
-val path = "file:///home/ubuntu/danskeit_hadoop-pyspark/labs/dataset/spark/people.json"
 
-val sqlContext = new org.apache.spark.sql.SQLContext(sc)
-val df = sqlContext.read.json("file:///home/ubuntu/spark/people.json")
+df = spark.read.json("file:///home/ubuntu/danskeit_hadoop-pyspark/labs/dataset/customer/customer.json")
 
 df.show()
 df.printSchema()
@@ -14,7 +12,7 @@ df.groupBy("age").count().show()
 
 df.registerTempTable("people")
 
-val teenagers = sqlContext.sql("SELECT name, age FROM people WHERE age >= 13 AND age <= 19")
+teenagers = sqlContext.sql("SELECT name, age FROM people WHERE age >= 13 AND age <= 19")
 teenagers.show()	// Displays records
 teenagers.count()	// Displays count
 
@@ -25,10 +23,10 @@ teenagers.collect().foreach(println)	// Prints data available in the Dataframe
 teenagers.select("name", "age").write.format("parquet").save("/home/ubuntu/spark/parquet")
 
 #Write data in parquet format to local file system
-//teenagers.select("name", "age").write.format("parquet").save("file:///home/ubuntu/spark/teenagers.parquet")
+teenagers.select("name", "age").write.format("parquet").save("file:///home/ubuntu/spark/teenagers.parquet")
 
 #Read the data in parquet from hdfs
-val newDf = sqlContext.read.format("parquet").load("/home/ubuntu/spark/parquet")
+newDf = spark.read.format("parquet").load("/home/ubuntu/spark/parquet")
 
 #Print details
 newDf.show()
@@ -39,8 +37,11 @@ newDf.select("name", "age").write.format("orc").save("/home/ubuntu/spark/orc/tee
 #Start Spark Shell with Avro dependency
 pyspark --packages org.apache.spark:spark-avro_2.12:3.0.1
 
+#Read the data in parquet from hdfs
+newDf = spark.read.format("parquet").load("/home/ubuntu/spark/parquet")
+
 #Write data in avro format
 newDf.select("name", "age").write.format("avro").save("/home/ubuntu/spark/avro/teenagers.avro")
 
-#Write data in avro format
-sqlContext.read.format("avro").load("/home/ubuntu/spark/avro/teenagers.avro")
+#Read data in avro format
+spark.read.format("avro").load("/home/ubuntu/spark/avro/teenagers.avro")
