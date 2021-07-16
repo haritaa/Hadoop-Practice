@@ -1,0 +1,66 @@
+#Pre-requisite: jdk 8
+
+#Download Kafka
+cd ~/Downloads
+curl https://downloads.apache.org/kafka/2.5.0/kafka_2.13-2.5.0.tgz -o kafka_2.13-2.5.0.tgz
+sudo tar xzvf kafka_2.13-2.5.0.tgz
+
+sudo mv kafka_2.13-2.5.0 /opt/kafka
+
+#KAFKA_HOME configuration
+sudo nano ~/.bashrc
+#############################
+export KAFKA_HOME=/opt/kafka
+export PATH=$PATH:$KAFKA_HOME/bin
+##############################################
+source ~/.bashrc			=> reloads the changes
+
+#KAFKA configuration
+#################################
+sudo nano $KAFKA_HOME/config/zookeeper.properties
+	set dataDir=/opt/kafka/data/zookeeper
+sudo nano $KAFKA_HOME/config/server.properties
+	set log.dirs=/opt/kafka/data/kafka-logs
+#################################################
+Create %KAFKA_HOME%/data directory [Optional]
+
+#Start ZOOKEEPER and KAFKA
+cd $KAFKA_HOME/bin
+sudo ./zookeeper-server-start.sh $KAFKA_HOME/config/zookeeper.properties &	=> Starts Zookeeper and runs in background
+sudo ./kafka-server-start.sh $KAFKA_HOME/config/server.properties &			=> Starts Kafka and runs in background
+
+#Verify KAFKA Startup
+sudo netstat -tulpen | grep 2181		=> Zookeeper default port
+sudo netstat -tulpen | grep 9092		=> Kafka broker default port
+
+#Stop ZOOKEEPER and KAFKA
+cd $KAFKA_HOME/bin
+sudo ./kafka-server-stop.sh			=> Stops Kafka
+sudo ./zookeeper-server-stop.sh		=> Stops Zookeeper
+
+#Start KAFKA MANAGER
+cd /home/ubuntu/danskeit_hadoop-pyspark/labs/programs
+unzip kafka-manager.zip
+mv kafka-manager ~/
+cd ~/kafka-manager/bin
+chmod 777 kafka-manager
+./kafka-manager -Dhttp.port=9090 &		=> Starts Kafka Manager
+
+###########ALTERNATIVE APPROACH: Package Installation##########
+
+#Install Kafka packages
+sudo apt-get install kafka
+sudo apt-get install kafka-server
+
+#Ensure broker id is unique for every node and zookeeper.connect property points to right one
+sudo vi /etc/kafka/conf/server.properties
+
+#Start Kafka service
+sudo service kafka-server start
+
+#Verify Kafka installation
+zookeeper-client
+ls /brokers/ids
+get /brokers/ids/<ID>
+
+###############################################################

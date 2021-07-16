@@ -23,7 +23,7 @@ Lab Setup
 			- https://www.virtualbox.org/wiki/Downloads
 		- Bigdata Box Image
 			- https://bigdata-training.s3.ap-south-1.amazonaws.com/image/Bigdata-Box-Ubuntu18-v1.0.ova
-		- Lab setup guide => https://github.com/asaravanakumar/danskeit_pyspark/tree/master/labs/setup/guide		
+		- Lab setup guide => https://github.com/asaravanakumar/danskeit_hadoop-pyspark/tree/master/labs/setup/guide		
 		- Login credentials
 			- username: bigdata
 			  password: bigdata@123

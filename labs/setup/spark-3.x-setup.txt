@@ -1,0 +1,55 @@
+#Pre-requisite: hadoop-3.x
+
+#Install Scala
+sudo apt install scala
+scala -version
+
+#Download Spark
+cd ~/Downloads
+curl https://downloads.apache.org/spark/spark-3.0.1/spark-3.0.1-bin-hadoop3.2.tgz -o spark-3.0.1.tgz
+tar xzvf spark-3.0.1.tgz
+
+sudo mv spark-3.0.1-bin-hadoop3.2 /opt/spark
+
+#SPARK_HOME configuration
+sudo nano ~/.bashrc
+#############################
+export SPARK_HOME=/opt/spark
+export PATH=$PATH:$SPARK_HOME/sbin:$SPARK_HOME/bin 
+##############################################
+source ~/.bashrc			=> reloads the changes
+
+###Spark History Server Configuration - START
+#Copy Spark Configuration template to create Spark Config file
+cp /opt/spark/conf/spark-defaults.conf.template /opt/spark/conf/spark-defaults.conf
+
+sudo nano /opt/spark/conf/spark-defaults.conf
+#############################
+spark.eventLog.enabled			true
+spark.history.fs.logDirectory	file:/tmp/spark-events
+#############################
+
+#Create spark-events temp directory
+sudo mkdir /tmp/spark-events
+
+###Spark History Service Configuration - END
+
+###Start Spark Components
+#Start Master
+start-master.sh				=> (Web URL: http://localhost:8080)
+
+#Start Worker
+start-slave.sh spark://bigdata-box:7077		=> bigdata-box vm
+
+start-slave.sh spark://<ip-address>:7077	=> (Web URL: http://localhost:8081)
+
+#Start Job History Server
+start-history-server						=> (Web URL: http://localhost:18080)
+
+#Launch PySpark Interactive Shell
+pyspark										=> (Web URL: http://localhost:4040)
+
+#Launch PySpark Interactive Shell Standalone cluster
+pyspark --master spark://bigdata-box:7077	=> bigdata-box vm
+
+pyspark --master spark://<master-ip>:7077

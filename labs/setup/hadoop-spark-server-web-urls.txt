@@ -11,6 +11,8 @@ JobHistoryServer Web UI 	- http://localhost:19888
 
 Hive Server	Web UI			- http://localhost:10002
 
+Hue Web UI					- http://localhost:8888
+
 HBase Master Web UI			- http://localhost:16010
 HBase Region Server Web UI 	- http://localhost:16030		
 
@@ -19,6 +21,6 @@ Spark 3.x
 
 Spark Master Web UI			- http://localhost:8080
 Spark Worker Web UI			- http://localhost:8081
-Spark Shell App UI			- http://localhost:4040 (Available only during active spark-shell session)
+PySpark Shell App UI		- http://localhost:4040 (Available only during active pyspark session)
 
 Spark Job History Server	- http://localhost:18080

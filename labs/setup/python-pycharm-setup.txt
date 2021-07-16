@@ -1,0 +1,17 @@
+#Install Python
+Download Python from https://www.python.org/ftp/python/3.9.1/Python-3.9.1.tar.xz
+
+sudo tar xzvf Python-3.9.1.tgz
+
+sudo mv Python-3.9.1 /opt/python39
+
+#Install PyCharm
+Download PyCharm Community Edition from https://www.jetbrains.com/pycharm/download/download-thanks.html?platform=linux&code=PCC
+
+sudo tar xzvf pycharm-community-2020.3.tar.gz
+
+sudo mv pycharm-community-2020.3 /opt/pycharm
+
+#Launch PyCharm IDE
+cd /opt/bin/pycharm
+./pycharm.sh

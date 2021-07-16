@@ -1,0 +1,38 @@
+#Install Scala (package installation)
+sudo apt install scala
+scala -version
+
+#Install Scala (manual installation)
+cd ~/Downloads
+sudo apt-get remove scala-library scala
+sudo wget www.scala-lang.org/files/archive/scala-2.12.10.deb
+sudo dpkg -i scala-2.12.10.deb
+
+#Create reference link to Scala installation
+ln -s /usr/share/scala /opt/scala
+
+#Install Sbt
+Download Sbt from https://www.scala-sbt.org/download.html
+
+sudo tar xzvf sbt-1.4.0.tgz
+
+sudo mv sbt /opt/sbt
+
+#SBT_HOME configuration
+sudo nano ~/.bashrc
+#############################
+export SBT_HOME=/opt/sbt
+export PATH=$PATH:$SBT_HOME/bin
+##############################################
+source ~/.bashrc			=> reloads the changes
+
+#Install Intellij
+Download Intellij IDEA Community Edition from https://www.jetbrains.com/idea/download/#section=linux
+
+sudo tar xzvf ideaIC-2020.2.3.tar.gz
+
+sudo mv idea-IC-202.7660.26 /opt/intellij
+
+#Launch Intellij IDE
+cd /opt/intellij/bin
+./idea.sh

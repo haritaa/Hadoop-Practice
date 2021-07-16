@@ -9,9 +9,14 @@ start-yarn.sh
 #JobHistoryServer
 mr-jobhistory-daemon.sh start historyserver
 
-#HiveServer
-cd $HIVE_HOME
-bin/hiveserver2 &			=> run in the background
+#Hive Metastore
+nohup hive --service metastore >/dev/null 2>&1 &
+
+#Hive Server
+nohup hive --service hiveserver2 >/dev/null 2>&1 &
+
+#Hue Server
+sudo nohup /opt/hue/build/env/bin/supervisor >/dev/null 2>&1 &
 
 #Start HBase
 start-hbase.sh
@@ -21,7 +26,6 @@ start-master.sh
 
 #Spark Worker
 start-slave.sh <spark-master-url>
-
 
 STOP COMMANDS
 =============
@@ -34,9 +38,17 @@ stop-yarn.sh
 #Hadoop HDFS
 stop-dfs.sh
 
-#HiveServer
+#Hue Server
+ps -ef | grep hue
+kill -9 <hue-pid>
+
+#Hive Server
 ps -ef | grep hive
 kill -9 <hiveserver-pid>
+
+#Hive Metastore
+ps -ef | grep hive
+kill -9 <hivemetastore-pid>
 
 #Stop HBase
 stop-hbase.sh

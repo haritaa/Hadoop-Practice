@@ -37,7 +37,7 @@ newDf.show()
 newDf.select("name", "age").write.format("orc").save("/home/ubuntu/spark/orc/teenagers.orc")
 
 #Start Spark Shell with Avro dependency
-spark-shell --packages org.apache.spark:spark-avro_2.12:3.0.1
+pyspark --packages org.apache.spark:spark-avro_2.12:3.0.1
 
 #Write data in avro format
 newDf.select("name", "age").write.format("avro").save("/home/ubuntu/spark/avro/teenagers.avro")

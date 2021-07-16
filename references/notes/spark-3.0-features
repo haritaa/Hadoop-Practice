@@ -7,7 +7,7 @@ New UI for Structure Streaming
 Datasource to Read Binary Files
 Support Recursive folders
 Support Multi char delimiter (||)
-New Spark build-in functions
+New Spark built-in functions
 DataFrame Tail
 Added repartition to SQL queries
 Better ANSI SQL compatible

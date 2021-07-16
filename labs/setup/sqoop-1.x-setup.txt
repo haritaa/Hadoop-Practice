@@ -1,0 +1,33 @@
+#Pre-requisite: hadoop-3.x
+
+#Download Sqoop
+cd ~/Downloads
+curl https://downloads.apache.org/sqoop/1.4.7/sqoop-1.4.7.bin__hadoop-2.6.0.tar.gz -o sqoop-1.4.7.tar.gz
+tar xzvf sqoop-1.4.7.tar.gz
+
+sudo mv sqoop-1.4.7.bin__hadoop-2.6.0 /opt/sqoop
+
+#SQOOP_HOME configuration
+sudo nano ~/.bashrc
+#############################
+export SQOOP_HOME=/opt/sqoop
+export PATH=$PATH:$SQOOP_HOME/bin 
+##############################################
+source ~/.bashrc			=> reloads the changes
+
+#Sqoop Configuration
+cd $SQOOP_HOME/conf
+mv sqoop-env-template.sh sqoop-env.sh
+sudo nano sqoop-env.sh
+#############################
+export HADOOP_COMMON_HOME=/opt/hadoop 
+export HADOOP_MAPRED_HOME=/opt/hadoop
+#############################
+
+##Link mysql-connector-java library to sqoop path
+##NOTE: Mysql service should be installed, configured and started before this step
+sudo apt-get install libmysql-java
+sudo ln -s /usr/share/java/mysql-connector-java.jar /opt/sqoop/lib/mysql-connector-java.jar
+
+sqoop version
+(should show sqoop version details)
