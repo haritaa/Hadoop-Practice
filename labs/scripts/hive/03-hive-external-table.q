@@ -19,7 +19,7 @@ DESCRIBE EMPLOYEE_EXT;
 DESCRIBE FORMATTED EMPLOYEE_EXT;
 
 # Load Data into external table
-LOAD DATA LOCAL INPATH '/home/ubuntu/aq_hadoop-pyspark/labs/dataset/empmgmt/employee.txt' OVERWRITE INTO TABLE EMPLOYEE_EXT;
+LOAD DATA LOCAL INPATH '/home/ubuntu/danskeit_hadoop-pyspark/labs/dataset/empmgmt/employee.txt' OVERWRITE INTO TABLE EMPLOYEE_EXT;
 
 # Query Data from managed table
 SELECT * FROM EMPLOYEE_EXT;

@@ -19,7 +19,7 @@ DESCRIBE EMPLOYEE;
 DESCRIBE FORMATTED EMPLOYEE;
 
 # Load Data into managed table
-LOAD DATA LOCAL INPATH '/home/ubuntu/aq_hadoop-pyspark/labs/dataset/empmgmt/employee.txt' OVERWRITE INTO TABLE EMPLOYEE;
+LOAD DATA LOCAL INPATH '/home/ubuntu/danskeit_hadoop-pyspark/labs/dataset/empmgmt/employee.txt' OVERWRITE INTO TABLE EMPLOYEE;
 
 # Query Data from managed table
 SELECT * FROM EMPLOYEE;

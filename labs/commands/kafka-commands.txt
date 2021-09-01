@@ -1,0 +1,51 @@
+#Navigate to KAFKA HOME directory
+cd $KAFKA_HOME
+
+##Kafka commands
+#Create Topic
+bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic test
+
+#List Topics
+bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+
+#Describe Topic
+bin/kafka-topics.sh --describe --bootstrap-server localhost:9092 --topic test
+
+#Produce Message
+bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
+
+#Consume Message (from current subscription)
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test
+#Consume Message (from beginning)
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
+#Consume Message (with consumer group)
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --group test-group
+#Consume Message (from specific partition)
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --partition 0 --offset earliest
+#Consume Message (from specific offset)
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --partition 0 --offset 3
+
+#Alter Topic
+bin/kafka-topics.sh --alter --bootstrap-server localhost:9092 --topic test --partitions 3
+
+#Delete Topic
+bin/kafka-topics.sh --delete --bootstrap-server localhost:2181 --topic test
+
+#Consumer Groups
+bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --list
+bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe --group test-group
+bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe --all-groups
+
+#Kafka Manager
+~/kafka-manager/bin/kafka-manager &
+
+#Kafka Connect
+bin/connect-standalone.sh config/connect-standalone.properties config/connect-file-source.properties config/connect-file-sink.properties
+
+#Kafka Stream
+bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic streams-plaintext-input
+bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic streams-wordcount-output --config cleanup.policy=compact
+bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe
+bin/kafka-run-class.sh org.apache.kafka.streams.examples.wordcount.WordCountDemo
+bin/kafka-console-producer.sh --broker-list localhost:9092 --topic streams-plaintext-input
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic streams-wordcount-output --from-beginning --formatter kafka.tools.DefaultMessageFormatter --property print.key=true --property print.value=true --property key.deserializer=org.apache.kafka.common.serialization.StringDeserializer --property value.deserializer=org.apache.kafka.common.serialization.LongDeserializer

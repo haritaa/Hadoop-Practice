@@ -13,7 +13,7 @@ LINES TERMINATED BY '\n'
 LOCATION '/user/training/empmgmt/input';
 
 # Load Data
-LOAD DATA LOCAL INPATH '/home/ubuntu/aq_hadoop-pyspark/labs/dataset/empmgmt/employee1.txt' OVERWRITE INTO TABLE employee1;
+LOAD DATA LOCAL INPATH '/home/ubuntu/danskeit_hadoop-pyspark/labs/dataset/empmgmt/employee1.txt' OVERWRITE INTO TABLE employee1;
 
 # Create country table
 CREATE EXTERNAL TABLE IF NOT EXISTS country (cid int, code String, name String)
@@ -24,7 +24,7 @@ LINES TERMINATED BY '\n'
 LOCATION '/user/training/country/input';
 
 # Load Data
-LOAD DATA LOCAL INPATH '/home/ubuntu/aq_hadoop-pyspark/labs/dataset/empmgmt/country.txt' OVERWRITE INTO TABLE country;
+LOAD DATA LOCAL INPATH '/home/ubuntu/danskeit_hadoop-pyspark/labs/dataset/empmgmt/country.txt' OVERWRITE INTO TABLE country;
 
 ## JOIN Queries
 

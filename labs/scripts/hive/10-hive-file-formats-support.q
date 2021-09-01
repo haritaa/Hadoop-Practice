@@ -13,7 +13,7 @@ ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.JsonSerDe'
 STORED AS TEXTFILE;
 
 # Loading data from local file system
-LOAD DATA LOCAL INPATH '/home/ubuntu/aq_hadoop-pyspark/labs/dataset/empmgmt/employee.json' OVERWRITE INTO TABLE employee_json;
+LOAD DATA LOCAL INPATH '/home/ubuntu/danskeit_hadoop-pyspark/labs/dataset/empmgmt/employee.json' OVERWRITE INTO TABLE employee_json;
 
 # Writing data to HDFS file system
 INSERT OVERWRITE DIRECTORY '/user/training/empmgmt/output' SELECT * FROM employee_json;

@@ -17,7 +17,7 @@ DESCRIBE EMPLOYEE_COMP;
 DESCRIBE FORMATTED EMPLOYEE_COMP;
 
 # Load data
-LOAD DATA LOCAL INPATH '/home/ubuntu/aq_hadoop-pyspark/labs/dataset/empmgmt/employee-comp.txt' OVERWRITE INTO TABLE EMPLOYEE_COMP;
+LOAD DATA LOCAL INPATH '/home/ubuntu/danskeit_hadoop-pyspark/labs/dataset/empmgmt/employee-comp.txt' OVERWRITE INTO TABLE EMPLOYEE_COMP;
 
 # Query Data
 SELECT * FROM EMPLOYEE_COMP;
